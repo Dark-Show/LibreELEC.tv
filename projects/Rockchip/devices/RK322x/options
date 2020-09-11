@@ -1,0 +1,26 @@
+################################################################################
+# setup device defaults
+################################################################################
+
+  # The TARGET_CPU variable controls which processor should be targeted for
+  # generated code.
+    case $TARGET_ARCH in
+      arm)
+        TARGET_FLOAT="hard"
+        TARGET_CPU="cortex-a7"
+        TARGET_FPU="neon-vfpv4"
+        TARGET_FEATURES="32bit"
+        ;;
+    esac
+
+  GRAPHIC_DRIVERS="lima"
+
+  # Kernel target
+  KERNEL_TARGET="zImage"
+
+  # kernel serial console
+  EXTRA_CMDLINE="console=uart8250,mmio32,0x11030000 console=tty0 coherent_pool=2M cec.debounce_ms=5000 video=HDMI-A-1:1920x1080"
+
+  ADDON_PROJECT="ARMv7"
+
+  ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS openvfd-driver"
