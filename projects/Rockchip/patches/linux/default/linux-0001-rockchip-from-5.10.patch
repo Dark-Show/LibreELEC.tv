@@ -1,4 +1,4 @@
-From 2e3fedafa307db03549840de3f5e342f09fb5c45 Mon Sep 17 00:00:00 2001
+From f8b6a51d36d6a5d84844eb4106f919777b181351 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
 Date: Thu, 13 Aug 2020 22:41:23 +0200
 Subject: [PATCH] dmaengine: pl330: fix instruction dump formatting
@@ -31,7 +31,7 @@ index 5274a0704d96..106f47298f9e 100644
  					} while (0)
  #define PL330_DBGMC_START(addr)		(cmd_line = addr)
 
-From 3bb4e2c068270e9c910e3a3b7bec8b0225e2d442 Mon Sep 17 00:00:00 2001
+From 5168f5d087ed7214bff206faf54e3ef50d7a77e0 Mon Sep 17 00:00:00 2001
 From: Jagan Teki <jagan@amarulasolutions.com>
 Date: Wed, 19 Aug 2020 00:15:05 +0530
 Subject: [PATCH] arm64: dts: rockchip: Fix power routing to support POE on
@@ -54,15 +54,15 @@ Link: https://lore.kernel.org/r/20200818184505.30064-1-jagan@amarulasolutions.co
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit bd77d0ad7a698f5e04edf02328d11e808a71d87c)
 ---
- .../boot/dts/rockchip/rk3399-roc-pc-mezzanine.dts      | 18 ++++++++++++++++--
- arch/arm64/boot/dts/rockchip/rk3399-roc-pc.dtsi        | 12 ++++++++++--
+ .../dts/rockchip/rk3399-roc-pc-mezzanine.dts   | 18 ++++++++++++++++--
+ .../arm64/boot/dts/rockchip/rk3399-roc-pc.dtsi | 12 ++++++++++--
  2 files changed, 26 insertions(+), 4 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-mezzanine.dts b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-mezzanine.dts
 index 2acb3d500fb9..754627d97144 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-mezzanine.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc-mezzanine.dts
-@@ -11,6 +11,16 @@
+@@ -11,6 +11,16 @@ / {
  	model = "Firefly ROC-RK3399-PC Mezzanine Board";
  	compatible = "firefly,roc-rk3399-pc-mezzanine", "rockchip,rk3399";
  
@@ -79,7 +79,7 @@ index 2acb3d500fb9..754627d97144 100644
  	vcc3v3_ngff: vcc3v3-ngff {
  		compatible = "regulator-fixed";
  		regulator-name = "vcc3v3_ngff";
-@@ -22,7 +32,7 @@
+@@ -22,7 +32,7 @@ vcc3v3_ngff: vcc3v3-ngff {
  		regulator-boot-on;
  		regulator-min-microvolt = <3300000>;
  		regulator-max-microvolt = <3300000>;
@@ -88,7 +88,7 @@ index 2acb3d500fb9..754627d97144 100644
  	};
  
  	vcc3v3_pcie: vcc3v3-pcie {
-@@ -34,10 +44,14 @@
+@@ -34,10 +44,14 @@ vcc3v3_pcie: vcc3v3-pcie {
  		pinctrl-0 = <&vcc3v3_pcie_en>;
  		regulator-min-microvolt = <3300000>;
  		regulator-max-microvolt = <3300000>;
@@ -108,7 +108,7 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc.dtsi b/arch/arm64/boot/d
 index b85ec31cd283..e7a459fa4322 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-roc-pc.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-roc-pc.dtsi
-@@ -110,6 +110,14 @@
+@@ -110,6 +110,14 @@ vcc_vbus_typec0: vcc-vbus-typec0 {
  		regulator-max-microvolt = <5000000>;
  	};
  
@@ -123,7 +123,7 @@ index b85ec31cd283..e7a459fa4322 100644
  	/* switched by pmic_sleep */
  	vcc1v8_s3: vcca1v8_s3: vcc1v8-s3 {
  		compatible = "regulator-fixed";
-@@ -141,7 +149,7 @@
+@@ -141,7 +149,7 @@ vcc3v3_sys: vcc3v3-sys {
  		regulator-boot-on;
  		regulator-min-microvolt = <3300000>;
  		regulator-max-microvolt = <3300000>;
@@ -132,7 +132,7 @@ index b85ec31cd283..e7a459fa4322 100644
  	};
  
  	vcca_0v9: vcca-0v9 {
-@@ -186,7 +194,7 @@
+@@ -186,7 +194,7 @@ vcc_sys: vcc-sys {
  		regulator-boot-on;
  		regulator-min-microvolt = <5000000>;
  		regulator-max-microvolt = <5000000>;
@@ -142,7 +142,7 @@ index b85ec31cd283..e7a459fa4322 100644
  
  	vdd_log: vdd-log {
 
-From 9d3c764ef494a805ed623e81e7485d5fc3f57a97 Mon Sep 17 00:00:00 2001
+From cd4adfd024d86a4ab65867f3122166a4cf0a607d Mon Sep 17 00:00:00 2001
 From: Johan Jonker <jbx6244@gmail.com>
 Date: Tue, 18 Aug 2020 16:37:27 +0200
 Subject: [PATCH] arm64: dts: rockchip: change spdif fallback compatible on
@@ -177,7 +177,7 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3308.dtsi b/arch/arm64/boot/dts/rock
 index e8b754d415d8..2560b98771ca 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3308.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3308.dtsi
-@@ -574,7 +574,7 @@
+@@ -574,7 +574,7 @@ i2s_2ch_1: i2s@ff360000 {
  	};
  
  	spdif_tx: spdif-tx@ff3a0000 {
@@ -187,7 +187,7 @@ index e8b754d415d8..2560b98771ca 100644
  		interrupts = <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
  		clocks = <&cru SCLK_SPDIF_TX>, <&cru HCLK_SPDIFTX>;
 
-From a87e7be5beb9646557e70f0b42c558d418ba16ce Mon Sep 17 00:00:00 2001
+From 57d1ec114955d4056e2e72ebbe84c3bfbaa40ec2 Mon Sep 17 00:00:00 2001
 From: Jagan Teki <jagan@amarulasolutions.com>
 Date: Fri, 7 Aug 2020 15:18:23 +0530
 Subject: [PATCH] dt-bindings: arm: rockchip: Update ROCKPi 4 binding
@@ -231,7 +231,7 @@ index db2e35796795..7025d00c06cc 100644
            - const: rockchip,rk3399
  
 
-From bb10faf3729a3982ba5a85b39b416116e315f642 Mon Sep 17 00:00:00 2001
+From f59e025517c4fef1764f7d4df03d69f31a36150d Mon Sep 17 00:00:00 2001
 From: Jagan Teki <jagan@amarulasolutions.com>
 Date: Fri, 7 Aug 2020 15:18:24 +0530
 Subject: [PATCH] arm64: dts: rockchip: Mark rock-pi-4 as rock-pi-4a dts
@@ -252,9 +252,9 @@ Link: https://lore.kernel.org/r/20200807094826.12019-2-jagan@amarulasolutions.co
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit b5edb04673700125bfd1d13e6c14747b1ecba522)
 ---
- arch/arm64/boot/dts/rockchip/Makefile                       |  2 +-
- .../{rk3399-rock-pi-4.dts => rk3399-rock-pi-4.dtsi}         |  3 ---
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4a.dts          | 13 +++++++++++++
+ arch/arm64/boot/dts/rockchip/Makefile               |  2 +-
+ .../{rk3399-rock-pi-4.dts => rk3399-rock-pi-4.dtsi} |  3 ---
+ arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4a.dts  | 13 +++++++++++++
  3 files changed, 14 insertions(+), 4 deletions(-)
  rename arch/arm64/boot/dts/rockchip/{rk3399-rock-pi-4.dts => rk3399-rock-pi-4.dtsi} (99%)
  create mode 100644 arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4a.dts
@@ -309,7 +309,7 @@ index 000000000000..89f2af5e111d
 +	compatible = "radxa,rockpi4a", "radxa,rockpi4", "rockchip,rk3399";
 +};
 
-From 54123d61cf3af2ae6b27e264a40c058eba9716c2 Mon Sep 17 00:00:00 2001
+From 5fb509c4faac03e7fb28aa080c782bba5801f407 Mon Sep 17 00:00:00 2001
 From: Jagan Teki <jagan@amarulasolutions.com>
 Date: Fri, 7 Aug 2020 15:18:25 +0530
 Subject: [PATCH] arm64: dts: rockchip: Add Radxa ROCK Pi 4B support
@@ -322,9 +322,9 @@ Link: https://lore.kernel.org/r/20200807094826.12019-3-jagan@amarulasolutions.co
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit c1075b7fcca81f58ebc5d723f07b23f84ae93daa)
 ---
- arch/arm64/boot/dts/rockchip/Makefile              |  1 +
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi | 23 ------------
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4b.dts | 42 ++++++++++++++++++++++
+ arch/arm64/boot/dts/rockchip/Makefile         |  1 +
+ .../boot/dts/rockchip/rk3399-rock-pi-4.dtsi   | 23 ----------
+ .../boot/dts/rockchip/rk3399-rock-pi-4b.dts   | 42 +++++++++++++++++++
  3 files changed, 43 insertions(+), 23 deletions(-)
  create mode 100644 arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4b.dts
 
@@ -344,7 +344,7 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boo
 index e163f438f836..678a336010bf 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -584,17 +584,6 @@
+@@ -584,17 +584,6 @@ &sdio0 {
  	pinctrl-names = "default";
  	pinctrl-0 = <&sdio0_bus4 &sdio0_cmd &sdio0_clk>;
  	sd-uhs-sdr104;
@@ -362,7 +362,7 @@ index e163f438f836..678a336010bf 100644
  };
  
  &sdmmc {
-@@ -663,18 +652,6 @@
+@@ -663,18 +652,6 @@ u2phy1_host: host-port {
  &uart0 {
  	pinctrl-names = "default";
  	pinctrl-0 = <&uart0_xfer &uart0_cts &uart0_rts>;
@@ -430,7 +430,7 @@ index 000000000000..f0055ce2fda0
 +	};
 +};
 
-From a28e4816e96a5b6f565fbe71e8d333e541a54227 Mon Sep 17 00:00:00 2001
+From b2d3eec236209048bc4cb9282684446c5f0e9048 Mon Sep 17 00:00:00 2001
 From: Jagan Teki <jagan@amarulasolutions.com>
 Date: Fri, 7 Aug 2020 15:18:26 +0530
 Subject: [PATCH] arm64: dts: rockchip: Add Radxa ROCK Pi 4C support
@@ -446,8 +446,8 @@ Link: https://lore.kernel.org/r/20200807094826.12019-4-jagan@amarulasolutions.co
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit 93e0e8ce5fdf549f1715dad00bfbb21b2f69ba8e)
 ---
- arch/arm64/boot/dts/rockchip/Makefile              |  1 +
- arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4c.dts | 51 ++++++++++++++++++++++
+ arch/arm64/boot/dts/rockchip/Makefile         |  1 +
+ .../boot/dts/rockchip/rk3399-rock-pi-4c.dts   | 51 +++++++++++++++++++
  2 files changed, 52 insertions(+)
  create mode 100644 arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4c.dts
 
@@ -521,7 +521,7 @@ index 000000000000..4c7ebb1c5d2d
 +	rockchip,pins = <3 RK_PD6 RK_FUNC_GPIO &pcfg_pull_none>;
 +};
 
-From c89d84dcef9b307af733aaaedbf1614b4b266341 Mon Sep 17 00:00:00 2001
+From c84d6a8be237391adaa7132e122900fb4d55ccd9 Mon Sep 17 00:00:00 2001
 From: Johan Jonker <jbx6244@gmail.com>
 Date: Sat, 8 Aug 2020 18:06:17 +0200
 Subject: [PATCH] dt-bindings: arm: rockchip: add Zkmagic A95X Z2 description
@@ -552,7 +552,7 @@ index 7025d00c06cc..251c3ca22e1b 100644
 +          - const: rockchip,rk3318
  ...
 
-From a4d955617bdc633aa291642c54134dd30d0c1187 Mon Sep 17 00:00:00 2001
+From 2098ac4e6366208eeebb55ea1cdca446591ded70 Mon Sep 17 00:00:00 2001
 From: Johan Jonker <jbx6244@gmail.com>
 Date: Sat, 8 Aug 2020 18:06:18 +0200
 Subject: [PATCH] arm64: dts: rockchip: add rk3318 A95X Z2 board
@@ -585,8 +585,8 @@ Link: https://lore.kernel.org/r/20200808160618.15445-4-jbx6244@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit 964ed0807b5f7b42b8a6ad48531ae9312e19599d)
 ---
- arch/arm64/boot/dts/rockchip/Makefile           |   1 +
- arch/arm64/boot/dts/rockchip/rk3318-a95x-z2.dts | 374 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/rockchip/Makefile         |   1 +
+ .../boot/dts/rockchip/rk3318-a95x-z2.dts      | 374 ++++++++++++++++++
  2 files changed, 375 insertions(+)
  create mode 100644 arch/arm64/boot/dts/rockchip/rk3318-a95x-z2.dts
 
@@ -983,7 +983,7 @@ index 000000000000..30c73ef25370
 +	status = "okay";
 +};
 
-From 739bf33933935649816771290e0f7e87ed9dcd44 Mon Sep 17 00:00:00 2001
+From 328d404b04b8814f16163b2614acbbc6020ba365 Mon Sep 17 00:00:00 2001
 From: Johan Jonker <jbx6244@gmail.com>
 Date: Thu, 13 Aug 2020 20:17:11 +0200
 Subject: [PATCH] arm64: dts: rockchip: fix cpu-supply for rk3328-evb
@@ -1003,7 +1003,7 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3328-evb.dts b/arch/arm64/boot/dts/r
 index 1969dab84138..a48767931af6 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3328-evb.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3328-evb.dts
-@@ -70,6 +70,18 @@
+@@ -70,6 +70,18 @@ &cpu0 {
  	cpu-supply = <&vdd_arm>;
  };
  
@@ -1023,7 +1023,7 @@ index 1969dab84138..a48767931af6 100644
  	bus-width = <8>;
  	cap-mmc-highspeed;
 
-From 4a30b39b5d073898b065e24af70688d0572bbacb Mon Sep 17 00:00:00 2001
+From ff013015fa54999ba5ae31ba8c6b3f952f4f0228 Mon Sep 17 00:00:00 2001
 From: Johan Jonker <jbx6244@gmail.com>
 Date: Thu, 13 Aug 2020 20:02:41 +0200
 Subject: [PATCH] ARM: dts: rockchip: update cpu supplies on rk3288
@@ -1047,7 +1047,7 @@ diff --git a/arch/arm/boot/dts/rk3288-miqi.dts b/arch/arm/boot/dts/rk3288-miqi.d
 index 213c9eb84f76..8a3992105151 100644
 --- a/arch/arm/boot/dts/rk3288-miqi.dts
 +++ b/arch/arm/boot/dts/rk3288-miqi.dts
-@@ -81,7 +81,19 @@
+@@ -81,7 +81,19 @@ vcc_sys: vsys-regulator {
  };
  
  &cpu0 {
@@ -1072,7 +1072,7 @@ diff --git a/arch/arm/boot/dts/rk3288-popmetal.dts b/arch/arm/boot/dts/rk3288-po
 index 6a51940398b5..160ed8b932fb 100644
 --- a/arch/arm/boot/dts/rk3288-popmetal.dts
 +++ b/arch/arm/boot/dts/rk3288-popmetal.dts
-@@ -103,7 +103,19 @@
+@@ -103,7 +103,19 @@ vcc28_dvp: vcc28-dvp-regulator {
  };
  
  &cpu0 {
@@ -1097,7 +1097,7 @@ diff --git a/arch/arm/boot/dts/rk3288-r89.dts b/arch/arm/boot/dts/rk3288-r89.dts
 index a258c7ae5329..e5ba901c7dcb 100644
 --- a/arch/arm/boot/dts/rk3288-r89.dts
 +++ b/arch/arm/boot/dts/rk3288-r89.dts
-@@ -91,7 +91,19 @@
+@@ -91,7 +91,19 @@ vcc_sys: sys-regulator {
  };
  
  &cpu0 {
@@ -1122,7 +1122,7 @@ diff --git a/arch/arm/boot/dts/rk3288-vyasa.dts b/arch/arm/boot/dts/rk3288-vyasa
 index 1a20854a1317..aa50f8ed4ca0 100644
 --- a/arch/arm/boot/dts/rk3288-vyasa.dts
 +++ b/arch/arm/boot/dts/rk3288-vyasa.dts
-@@ -125,7 +125,19 @@
+@@ -125,7 +125,19 @@ ext_gmac: external-gmac-clock {
  };
  
  &cpu0 {
@@ -1144,7 +1144,7 @@ index 1a20854a1317..aa50f8ed4ca0 100644
  
  &emmc {
 
-From 23f9077620fd1f450589387e5951d0db36d2f6d4 Mon Sep 17 00:00:00 2001
+From d8cfa85f2fa9c5cc31d90d3ba9cf3b72f0e9416a Mon Sep 17 00:00:00 2001
 From: Johan Jonker <jbx6244@gmail.com>
 Date: Thu, 13 Aug 2020 19:24:50 +0200
 Subject: [PATCH] ARM: dts: rockchip: rk3066a: add label to cpu@1
@@ -1163,7 +1163,7 @@ diff --git a/arch/arm/boot/dts/rk3066a.dtsi b/arch/arm/boot/dts/rk3066a.dtsi
 index b599394d149d..252750c97f97 100644
 --- a/arch/arm/boot/dts/rk3066a.dtsi
 +++ b/arch/arm/boot/dts/rk3066a.dtsi
-@@ -36,7 +36,7 @@
+@@ -36,7 +36,7 @@ cpu0: cpu@0 {
  			clock-latency = <40000>;
  			clocks = <&cru ARMCLK>;
  		};
@@ -1173,7 +1173,7 @@ index b599394d149d..252750c97f97 100644
  			compatible = "arm,cortex-a9";
  			next-level-cache = <&L2>;
 
-From c9ab5671bc0bceac1179f1566daf964c12c4be03 Mon Sep 17 00:00:00 2001
+From bc98e7e3eb5b3d705d24d3df69c57f85dbb1ed9d Mon Sep 17 00:00:00 2001
 From: Johan Jonker <jbx6244@gmail.com>
 Date: Thu, 13 Aug 2020 19:24:51 +0200
 Subject: [PATCH] ARM: dts: rockchip: update cpu supplies on rk3066a
@@ -1196,7 +1196,7 @@ diff --git a/arch/arm/boot/dts/rk3066a-bqcurie2.dts b/arch/arm/boot/dts/rk3066a-
 index 0a56a2f1bc4d..eba7a1344976 100644
 --- a/arch/arm/boot/dts/rk3066a-bqcurie2.dts
 +++ b/arch/arm/boot/dts/rk3066a-bqcurie2.dts
-@@ -63,7 +63,11 @@
+@@ -63,7 +63,11 @@ volume-down {
  };
  
  &cpu0 {
@@ -1213,7 +1213,7 @@ diff --git a/arch/arm/boot/dts/rk3066a-marsboard.dts b/arch/arm/boot/dts/rk3066a
 index 7e01f6406a86..6b121658d93c 100644
 --- a/arch/arm/boot/dts/rk3066a-marsboard.dts
 +++ b/arch/arm/boot/dts/rk3066a-marsboard.dts
-@@ -47,7 +47,11 @@
+@@ -47,7 +47,11 @@ vsys: vsys-regulator {
  };
  
  &cpu0 {
@@ -1230,7 +1230,7 @@ diff --git a/arch/arm/boot/dts/rk3066a-rayeager.dts b/arch/arm/boot/dts/rk3066a-
 index f9db6bb9fa11..309518403d86 100644
 --- a/arch/arm/boot/dts/rk3066a-rayeager.dts
 +++ b/arch/arm/boot/dts/rk3066a-rayeager.dts
-@@ -128,7 +128,11 @@
+@@ -128,7 +128,11 @@ vcc_otg: usb-otg-regulator {
  };
  
  &cpu0 {
@@ -1244,7 +1244,7 @@ index f9db6bb9fa11..309518403d86 100644
  
  &emac {
 
-From 4b163a2456edff104e7c9e8d6852afb5aec99b7c Mon Sep 17 00:00:00 2001
+From 3e382aa17f8ebac176163ac9e71661eaeff6ab34 Mon Sep 17 00:00:00 2001
 From: Adrian Schmutzler <freifunk@adrianschmutzler.de>
 Date: Sun, 30 Aug 2020 21:08:20 +0200
 Subject: [PATCH] ARM: dts: rockchip: replace status value "ok" by "okay"
@@ -1273,7 +1273,7 @@ diff --git a/arch/arm/boot/dts/rk3288-evb.dtsi b/arch/arm/boot/dts/rk3288-evb.dt
 index 018802df4c0e..c4ca73b40d4a 100644
 --- a/arch/arm/boot/dts/rk3288-evb.dtsi
 +++ b/arch/arm/boot/dts/rk3288-evb.dtsi
-@@ -247,7 +247,7 @@
+@@ -247,7 +247,7 @@ &gmac {
  	pinctrl-0 = <&rgmii_pins>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1286,7 +1286,7 @@ diff --git a/arch/arm/boot/dts/rk3288-firefly-reload-core.dtsi b/arch/arm/boot/d
 index 61435d8ee37b..36efa36b7190 100644
 --- a/arch/arm/boot/dts/rk3288-firefly-reload-core.dtsi
 +++ b/arch/arm/boot/dts/rk3288-firefly-reload-core.dtsi
-@@ -61,7 +61,7 @@
+@@ -61,7 +61,7 @@ &gmac {
  	snps,reset-gpio = <&gpio4 RK_PB0 GPIO_ACTIVE_LOW>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1299,7 +1299,7 @@ diff --git a/arch/arm/boot/dts/rk3288-firefly.dtsi b/arch/arm/boot/dts/rk3288-fi
 index e5c4fd4ea67e..7fb582302b32 100644
 --- a/arch/arm/boot/dts/rk3288-firefly.dtsi
 +++ b/arch/arm/boot/dts/rk3288-firefly.dtsi
-@@ -191,7 +191,7 @@
+@@ -191,7 +191,7 @@ &gmac {
  	snps,reset-gpio = <&gpio4 RK_PB0 GPIO_ACTIVE_LOW>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1312,7 +1312,7 @@ diff --git a/arch/arm/boot/dts/rk3288-miqi.dts b/arch/arm/boot/dts/rk3288-miqi.d
 index 8a3992105151..cf54d5ffff2f 100644
 --- a/arch/arm/boot/dts/rk3288-miqi.dts
 +++ b/arch/arm/boot/dts/rk3288-miqi.dts
-@@ -120,7 +120,7 @@
+@@ -120,7 +120,7 @@ &gmac {
  	snps,reset-gpio = <&gpio4 RK_PB0 GPIO_ACTIVE_LOW>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1325,7 +1325,7 @@ diff --git a/arch/arm/boot/dts/rk3288-popmetal.dts b/arch/arm/boot/dts/rk3288-po
 index 160ed8b932fb..8c7376d64bc4 100644
 --- a/arch/arm/boot/dts/rk3288-popmetal.dts
 +++ b/arch/arm/boot/dts/rk3288-popmetal.dts
-@@ -161,7 +161,7 @@
+@@ -161,7 +161,7 @@ &gmac {
  	pinctrl-0 = <&rgmii_pins>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1338,7 +1338,7 @@ diff --git a/arch/arm/boot/dts/rk3288-r89.dts b/arch/arm/boot/dts/rk3288-r89.dts
 index e5ba901c7dcb..55467bc30fa6 100644
 --- a/arch/arm/boot/dts/rk3288-r89.dts
 +++ b/arch/arm/boot/dts/rk3288-r89.dts
-@@ -119,7 +119,7 @@
+@@ -119,7 +119,7 @@ &gmac {
  	pinctrl-0 = <&rgmii_pins>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1351,7 +1351,7 @@ diff --git a/arch/arm/boot/dts/rk3288-rock2-square.dts b/arch/arm/boot/dts/rk328
 index 3cca4d0f9b09..c4d1d142d8c6 100644
 --- a/arch/arm/boot/dts/rk3288-rock2-square.dts
 +++ b/arch/arm/boot/dts/rk3288-rock2-square.dts
-@@ -156,7 +156,7 @@
+@@ -156,7 +156,7 @@ &sdmmc {
  };
  
  &gmac {
@@ -1364,7 +1364,7 @@ diff --git a/arch/arm/boot/dts/rk3288-tinker.dtsi b/arch/arm/boot/dts/rk3288-tin
 index 90e9be443fe6..9c1e38c54eae 100644
 --- a/arch/arm/boot/dts/rk3288-tinker.dtsi
 +++ b/arch/arm/boot/dts/rk3288-tinker.dtsi
-@@ -137,7 +137,7 @@
+@@ -137,7 +137,7 @@ &gmac {
  	snps,reset-delays-us = <0 10000 1000000>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1374,7 +1374,7 @@ index 90e9be443fe6..9c1e38c54eae 100644
  
  &gpu {
 
-From 26f3fea877d88bffe0cfbccafb3109a5b4700de9 Mon Sep 17 00:00:00 2001
+From a7b3e40b28a6dd6d8c3b8d19a471369304cf2481 Mon Sep 17 00:00:00 2001
 From: Adrian Schmutzler <freifunk@adrianschmutzler.de>
 Date: Sun, 30 Aug 2020 22:11:12 +0200
 Subject: [PATCH] arm64: dts: rockchip: replace status value "ok" by "okay"
@@ -1398,7 +1398,7 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi b/arch/arm64/boot/dts/
 index 1c52f47c43a6..87fabc64cc39 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi
-@@ -134,7 +134,7 @@
+@@ -134,7 +134,7 @@ &gmac {
  	pinctrl-0 = <&rmii_pins>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1411,7 +1411,7 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts b/arch/arm64
 index b058ce999e3b..ecce16ecc9c3 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
-@@ -183,7 +183,7 @@
+@@ -183,7 +183,7 @@ &gmac {
  	snps,reset-delays-us = <0 10000 1000000>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1424,7 +1424,7 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts b/arch/arm64/boot/dts/r
 index 236ab0f1b206..2582fa4b90e2 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
-@@ -167,7 +167,7 @@
+@@ -167,7 +167,7 @@ &gmac {
  	pinctrl-0 = <&rmii_pins>;
  	tx_delay = <0x30>;
  	rx_delay = <0x10>;
@@ -1433,7 +1433,7 @@ index 236ab0f1b206..2582fa4b90e2 100644
  };
  
  &i2c0 {
-@@ -198,7 +198,7 @@
+@@ -198,7 +198,7 @@ hym8563: hym8563@51 {
  };
  
  &io_domains {
@@ -1443,7 +1443,7 @@ index 236ab0f1b206..2582fa4b90e2 100644
  	audio-supply = <&vcc_io>;
  	gpio30-supply = <&vcc_io>;
 
-From 28e7a5de4a188cb33017f93a025b3888bf09a74c Mon Sep 17 00:00:00 2001
+From 401449d1c6a9e50b75efbd0988ac5a82b7c82bfd Mon Sep 17 00:00:00 2001
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Date: Fri, 28 Aug 2020 17:26:35 +0200
 Subject: [PATCH] dmaengine: pl330: Simplify with dev_err_probe()
@@ -1487,7 +1487,7 @@ index 106f47298f9e..bb27338ec1ae 100644
  		ret = reset_control_deassert(pl330->rstc_ocp);
  		if (ret) {
 
-From da47d555261d41660af9d1071f22b044079d8aff Mon Sep 17 00:00:00 2001
+From fe565b3fa114b5377550b7f0bb71b1160c50b1b1 Mon Sep 17 00:00:00 2001
 From: Robin Murphy <robin.murphy@arm.com>
 Date: Thu, 3 Sep 2020 21:25:53 +0100
 Subject: [PATCH] dmaengine: pl330: Drop local dma_parms
@@ -1528,7 +1528,7 @@ index bb27338ec1ae..000c3c4b4f7a 100644
  	 * This is the limit for transfers with a buswidth of 1, larger
  	 * buswidths will have larger limits.
 
-From 86d82ef8547894e41cfded4a7521c7dcb6f3dc54 Mon Sep 17 00:00:00 2001
+From 4f8a4d2d5c8927dd267cfbcd69da442e9b6b04a8 Mon Sep 17 00:00:00 2001
 From: Tuo Li <tuoli96@outlook.com>
 Date: Mon, 7 Sep 2020 21:09:37 +0800
 Subject: [PATCH] ALSA: rockchip_i2s: fix a possible divide-by-zero bug in
@@ -1566,7 +1566,7 @@ index d1438753edb4..593299675b8c 100644
  
  		div_bclk = mclk_rate / bclk_rate;
 
-From ddbd68d0a7bc4931238977a1a6b35741c77c550c Mon Sep 17 00:00:00 2001
+From b49882d68c0094325308386115599649c1b74c53 Mon Sep 17 00:00:00 2001
 From: Allen Pais <allen.lkml@gmail.com>
 Date: Mon, 31 Aug 2020 16:05:27 +0530
 Subject: [PATCH] dmaengine: pl330: convert tasklets to use new tasklet_setup()
@@ -1633,7 +1633,7 @@ index 000c3c4b4f7a..d98fb318dd2d 100644
  	spin_unlock_irqrestore(&pl330->lock, flags);
  
 
-From 1004f7a89c69a41e05bfb0e50b855192eb13def4 Mon Sep 17 00:00:00 2001
+From f8bc756a7f4ac417d32ae51b7593f88b9754fc11 Mon Sep 17 00:00:00 2001
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Date: Wed, 16 Sep 2020 18:17:40 +0200
 Subject: [PATCH] clk: rockchip: rk3308: drop unused mux_timer_src_p
@@ -1667,7 +1667,7 @@ index b0baf87a283e..5bf15f2a44b7 100644
  PNAME(mux_nandc_p)		= { "clk_nandc_div", "clk_nandc_div50" };
  PNAME(mux_sdmmc_p)		= { "clk_sdmmc_div", "clk_sdmmc_div50" };
 
-From 61d1828ae692430d8b032376bae59602398fdb36 Mon Sep 17 00:00:00 2001
+From f5834f56c4ea4b56b94f7e34d091996806c7ff6d Mon Sep 17 00:00:00 2001
 From: Elaine Zhang <zhangqing@rock-chips.com>
 Date: Mon, 14 Sep 2020 10:22:20 +0800
 Subject: [PATCH] clk: rockchip: Use clk_hw_register_composite instead of
@@ -1685,12 +1685,12 @@ Link: https://lore.kernel.org/r/20200914022225.23613-2-zhangqing@rock-chips.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit 63207c37eac4f15fdebac14685a315c259c0a780)
 ---
- drivers/clk/rockchip/clk-half-divider.c | 18 +++++-----
- drivers/clk/rockchip/clk.c              | 61 ++++++++++++++++-----------------
+ drivers/clk/rockchip/clk-half-divider.c | 18 ++++----
+ drivers/clk/rockchip/clk.c              | 61 ++++++++++++-------------
  2 files changed, 40 insertions(+), 39 deletions(-)
 
 diff --git a/drivers/clk/rockchip/clk-half-divider.c b/drivers/clk/rockchip/clk-half-divider.c
-index b333fc28c94b..e97fd3dfbae7 100644
+index 37c858d689e0..e97fd3dfbae7 100644
 --- a/drivers/clk/rockchip/clk-half-divider.c
 +++ b/drivers/clk/rockchip/clk-half-divider.c
 @@ -166,7 +166,7 @@ struct clk *rockchip_clk_register_halfdiv(const char *name,
@@ -1865,7 +1865,7 @@ index 546e810c3560..46409972983e 100644
  
  struct rockchip_clk_provider * __init rockchip_clk_init(struct device_node *np,
 
-From ec0b48760e3c0efb4522dfedf3a5088e538991c5 Mon Sep 17 00:00:00 2001
+From fc5cd16e212201040c413177b1d8a8c86b1cd85d Mon Sep 17 00:00:00 2001
 From: Elaine Zhang <zhangqing@rock-chips.com>
 Date: Mon, 14 Sep 2020 10:22:21 +0800
 Subject: [PATCH] clk: rockchip: Export rockchip_clk_register_ddrclk()
@@ -1893,7 +1893,7 @@ index 9273bce4d7b6..86718c54e56b 100644
  }
 +EXPORT_SYMBOL_GPL(rockchip_clk_register_ddrclk);
 
-From e2b0bd39722ef935b30bacf97a23446297169ac7 Mon Sep 17 00:00:00 2001
+From 93e6ddb07900ec894ce44c28bb17d6f5ed87b4ad Mon Sep 17 00:00:00 2001
 From: Elaine Zhang <zhangqing@rock-chips.com>
 Date: Mon, 14 Sep 2020 10:22:22 +0800
 Subject: [PATCH] clk: rockchip: Export rockchip_register_softrst()
@@ -1934,7 +1934,7 @@ index 5f1ff5e47c4f..5d07266745b8 100644
  };
 +EXPORT_SYMBOL_GPL(rockchip_register_softrst);
 
-From 8af53c34ecbf759fccf3769fa03d43db2ac554cb Mon Sep 17 00:00:00 2001
+From 74375839bb519db2a693dd7ca086037dc4c7b2ea Mon Sep 17 00:00:00 2001
 From: Elaine Zhang <zhangqing@rock-chips.com>
 Date: Mon, 14 Sep 2020 10:22:23 +0800
 Subject: [PATCH] clk: rockchip: Export some clock common APIs for module
@@ -1950,7 +1950,7 @@ Link: https://lore.kernel.org/r/20200914022225.23613-5-zhangqing@rock-chips.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit ea650c26611dd61adfcc8647d6144f2c9f453d90)
 ---
- drivers/clk/rockchip/clk.c | 52 ++++++++++++++++++++++++++--------------------
+ drivers/clk/rockchip/clk.c | 52 ++++++++++++++++++++++----------------
  1 file changed, 30 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/clk/rockchip/clk.c b/drivers/clk/rockchip/clk.c
@@ -2080,7 +2080,7 @@ index 46409972983e..b443169dd408 100644
  }
 +EXPORT_SYMBOL_GPL(rockchip_register_restart_notifier);
 
-From c71d3c0979104408630b2c540ae383b1ff0d4dd3 Mon Sep 17 00:00:00 2001
+From a2333021984c54fe3d25147cb684be1408b23861 Mon Sep 17 00:00:00 2001
 From: Elaine Zhang <zhangqing@rock-chips.com>
 Date: Mon, 14 Sep 2020 10:23:04 +0800
 Subject: [PATCH] clk: rockchip: fix the clk config to support module build
@@ -2098,8 +2098,8 @@ Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit 4d98ed1e126495016f2a3ef4db6379855c4aacf2)
 ---
  drivers/clk/Kconfig           |  1 +
- drivers/clk/rockchip/Kconfig  | 78 +++++++++++++++++++++++++++++++++++++++++++
- drivers/clk/rockchip/Makefile | 42 ++++++++++++-----------
+ drivers/clk/rockchip/Kconfig  | 78 +++++++++++++++++++++++++++++++++++
+ drivers/clk/rockchip/Makefile | 42 ++++++++++---------
  3 files changed, 101 insertions(+), 20 deletions(-)
  create mode 100644 drivers/clk/rockchip/Kconfig
 
@@ -2251,7 +2251,7 @@ index 7c5b5813a87c..a99e4d9bbae1 100644
 +obj-$(CONFIG_CLK_RK3368)        += clk-rk3368.o
 +obj-$(CONFIG_CLK_RK3399)        += clk-rk3399.o
 
-From 640cf0e121d7879899d26bce21b5c7d954f67b09 Mon Sep 17 00:00:00 2001
+From 74ec853ca0338f47baa1624630398499e0135bb1 Mon Sep 17 00:00:00 2001
 From: Elaine Zhang <zhangqing@rock-chips.com>
 Date: Mon, 14 Sep 2020 10:23:16 +0800
 Subject: [PATCH] clk: rockchip: rk3399: Support module build
@@ -2269,7 +2269,7 @@ Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit 70d839e2761d22eba6facdb3b65faea4d57f355d)
 ---
  drivers/clk/rockchip/Kconfig      |  2 +-
- drivers/clk/rockchip/clk-rk3399.c | 56 +++++++++++++++++++++++++++++++++++++++
+ drivers/clk/rockchip/clk-rk3399.c | 56 +++++++++++++++++++++++++++++++
  2 files changed, 57 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/clk/rockchip/Kconfig b/drivers/clk/rockchip/Kconfig
@@ -2360,7 +2360,7 @@ index ce1d2446f142..7df2f1e00347 100644
 +MODULE_LICENSE("GPL");
 +MODULE_ALIAS("platform:clk-rk3399");
 
-From 2862d98b5f5d3682afe09bab8fc29c982e3ac0fe Mon Sep 17 00:00:00 2001
+From 79dad0f867e127bfce0ba4340cb54b638829830f Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Sun, 20 Sep 2020 17:45:27 +0200
 Subject: [PATCH] dt-bindings: Add doc for FriendlyARM NanoPi R2S
@@ -2393,7 +2393,7 @@ index 251c3ca22e1b..65b4cc2c63f7 100644
          items:
            - enum:
 
-From 6b865e0835b1517ed2e7d44feb819f83ce3bc138 Mon Sep 17 00:00:00 2001
+From ae6ee625bff517db4722f4e20ac12178cade3b05 Mon Sep 17 00:00:00 2001
 From: David Bauer <mail@david-bauer.net>
 Date: Sun, 20 Sep 2020 17:45:28 +0200
 Subject: [PATCH] arm64: dts: rockchip: Add support for FriendlyARM NanoPi R2S
@@ -2416,8 +2416,8 @@ Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit f1ec83f880dbeaceb10d33c40c47aa1769b787e8)
 ---
- arch/arm64/boot/dts/rockchip/Makefile              |   1 +
- arch/arm64/boot/dts/rockchip/rk3328-nanopi-r2s.dts | 368 +++++++++++++++++++++
+ arch/arm64/boot/dts/rockchip/Makefile         |   1 +
+ .../boot/dts/rockchip/rk3328-nanopi-r2s.dts   | 368 ++++++++++++++++++
  2 files changed, 369 insertions(+)
  create mode 100644 arch/arm64/boot/dts/rockchip/rk3328-nanopi-r2s.dts
 
@@ -2808,7 +2808,7 @@ index 000000000000..be7a31d81632
 +	status = "okay";
 +};
 
-From f18092b21f3ea3ed7d134b274c64c8edde1fcb30 Mon Sep 17 00:00:00 2001
+From 42d7d1d5b93572ff98211bdaeea0f25b395081e2 Mon Sep 17 00:00:00 2001
 From: Artem Lapkin <email2tema@gmail.com>
 Date: Wed, 23 Sep 2020 21:08:22 +0800
 Subject: [PATCH] arm64: dts: rockchip: add spiflash node to rk3399-khadas-edge
@@ -2827,7 +2827,7 @@ diff --git a/arch/arm64/boot/dts/rockchip/rk3399-khadas-edge.dtsi b/arch/arm64/b
 index e36837c04dc7..c67420578fac 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-khadas-edge.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-khadas-edge.dtsi
-@@ -690,6 +690,16 @@
+@@ -690,6 +690,16 @@ &sdhci {
  	status = "okay";
  };
  
@@ -2845,7 +2845,7 @@ index e36837c04dc7..c67420578fac 100644
  	status = "okay";
  };
 
-From e2cad982d40449e0839c6de164a34a1d2e23d694 Mon Sep 17 00:00:00 2001
+From de21716ce0f319bdb285a454c4e81c2b6bb82066 Mon Sep 17 00:00:00 2001
 From: Artem Lapkin <email2tema@gmail.com>
 Date: Wed, 23 Sep 2020 21:08:23 +0800
 Subject: [PATCH] arm64: dts: rockchip: add ir-receiver node to
@@ -2859,14 +2859,14 @@ Link: https://lore.kernel.org/r/20200923130823.1612533-3-art@khadas.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 (cherry picked from commit 30a9a8c16865d37bfc0f1859a398ba1b24eec569)
 ---
- arch/arm64/boot/dts/rockchip/rk3399-khadas-edge.dtsi | 14 ++++++++++++++
+ .../boot/dts/rockchip/rk3399-khadas-edge.dtsi      | 14 ++++++++++++++
  1 file changed, 14 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-khadas-edge.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-khadas-edge.dtsi
 index c67420578fac..635afdd99122 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-khadas-edge.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-khadas-edge.dtsi
-@@ -138,6 +138,14 @@
+@@ -138,6 +138,14 @@ power {
  		};
  	};
  
@@ -2881,7 +2881,7 @@ index c67420578fac..635afdd99122 100644
  	leds {
  		compatible = "gpio-leds";
  		pinctrl-names = "default";
-@@ -585,6 +593,12 @@
+@@ -585,6 +593,12 @@ pwrbtn: pwrbtn {
  		};
  	};
  
@@ -2895,7 +2895,7 @@ index c67420578fac..635afdd99122 100644
  		sys_led_pin: sys-led-pin {
  			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
 
-From d9ffbaa89722fee3ef963646ea2423ac84f78854 Mon Sep 17 00:00:00 2001
+From 0a69d7e6961e5b0bcd1f421d9aa451b706587b9e Mon Sep 17 00:00:00 2001
 From: Stephen Boyd <sboyd@kernel.org>
 Date: Wed, 23 Sep 2020 17:41:44 -0700
 Subject: [PATCH] clk: rockchip: Initialize hw to error to avoid undefined
@@ -2933,7 +2933,7 @@ index e97fd3dfbae7..ccd5c270c213 100644
  	struct clk_gate *gate = NULL;
  	struct clk_divider *div = NULL;
 
-From aadd7a83a8a1e799653d9df0cc99bb0633515fbf Mon Sep 17 00:00:00 2001
+From 91a1567b91a0534af648e25717fe4e6904010768 Mon Sep 17 00:00:00 2001
 From: Vinod Koul <vkoul@kernel.org>
 Date: Wed, 30 Sep 2020 17:47:35 +0530
 Subject: [PATCH] dmaengine: pl330: fix argument for tasklet

@@ -1,4 +1,4 @@
-From b162fb6ee80dd2a986dc4d0d4eaefd29f9152f9c Mon Sep 17 00:00:00 2001
+From f8c3cc05045694fd3d4881efb9654194661ca489 Mon Sep 17 00:00:00 2001
 From: Tomeu Vizoso <tomeu.vizoso@collabora.com>
 Date: Thu, 11 Jun 2020 10:58:43 +0200
 Subject: [PATCH] drm/panfrost: Make sure GPU is powered on when reading
@@ -21,7 +21,7 @@ Link: https://patchwork.freedesktop.org/patch/msgid/20200611085900.49740-1-tomeu
  1 file changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-index f2c1ddc41a9b..e0f190e43813 100644
+index 165403878ad9..fac03c348904 100644
 --- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
 +++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
 @@ -10,6 +10,7 @@
@@ -32,7 +32,7 @@ index f2c1ddc41a9b..e0f190e43813 100644
  
  #include "panfrost_device.h"
  #include "panfrost_features.h"
-@@ -368,7 +369,16 @@ void panfrost_gpu_fini(struct panfrost_device *pfdev)
+@@ -384,7 +385,16 @@ void panfrost_gpu_fini(struct panfrost_device *pfdev)
  
  u32 panfrost_gpu_get_latest_flush_id(struct panfrost_device *pfdev)
  {
@@ -52,7 +52,7 @@ index f2c1ddc41a9b..e0f190e43813 100644
  	return 0;
  }
 
-From 2aacfa5ced256a281c36ea2577fc5fb7a4974e9b Mon Sep 17 00:00:00 2001
+From 744591d2b1e9712340cd8bb73dd732783f6c752f Mon Sep 17 00:00:00 2001
 From: Tomeu Vizoso <tomeu.vizoso@collabora.com>
 Date: Thu, 11 Jun 2020 10:58:44 +0200
 Subject: [PATCH] drm/panfrost: Add compatible string for bifrost
@@ -71,10 +71,10 @@ Link: https://patchwork.freedesktop.org/patch/msgid/20200611085900.49740-2-tomeu
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
-index ada51df9a7a3..f79f98534ab6 100644
+index 5d95917f923a..0fc084110e5b 100644
 --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
 +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -677,6 +677,7 @@ static const struct of_device_id dt_match[] = {
+@@ -678,6 +678,7 @@ static const struct of_device_id dt_match[] = {
  	{ .compatible = "arm,mali-t830", .data = &default_data, },
  	{ .compatible = "arm,mali-t860", .data = &default_data, },
  	{ .compatible = "arm,mali-t880", .data = &default_data, },
@@ -83,7 +83,7 @@ index ada51df9a7a3..f79f98534ab6 100644
  };
  MODULE_DEVICE_TABLE(of, dt_match);
 
-From ef833747ee892a26711ee7765ff81166cd5f1d52 Mon Sep 17 00:00:00 2001
+From 275efe8d548e9422597bc13d7d40856b3f474313 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
 Date: Fri, 10 Jul 2020 11:53:56 +0200
 Subject: [PATCH] drm/panfrost: avoid static declaration
@@ -100,7 +100,7 @@ Signed-off-by: Rob Herring <robh@kernel.org>
 Link: https://patchwork.freedesktop.org/patch/msgid/20200710095409.407087-2-peron.clem@gmail.com
 (cherry picked from commit 862cc626210e34501b4d7a7795c41a67785987e5)
 ---
- drivers/gpu/drm/panfrost/panfrost_devfreq.c | 38 ++++++++++++++---------------
+ drivers/gpu/drm/panfrost/panfrost_devfreq.c | 38 ++++++++++-----------
  1 file changed, 18 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
@@ -160,7 +160,7 @@ index 413987038fbf..1b560b903ea6 100644
  {
  	panfrost_devfreq_update_utilization(pfdev);
 
-From e79051392b32df8ba3dcb9cd160f1dfe5631ca1a Mon Sep 17 00:00:00 2001
+From f7774ba8f8a3c2846586cb7a7115692e92807be7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
 Date: Fri, 10 Jul 2020 11:53:57 +0200
 Subject: [PATCH] drm/panfrost: clean headers in devfreq
@@ -206,7 +206,7 @@ index 1b560b903ea6..df7b71da9a84 100644
  static void panfrost_devfreq_update_utilization(struct panfrost_device *pfdev)
  {
 
-From b644d4b83e0c6b86565dc6e7eda0e368e855c56d Mon Sep 17 00:00:00 2001
+From 2af454efcbd3b11f4ee2d6b646271d8afe009103 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
 Date: Fri, 10 Jul 2020 11:53:58 +0200
 Subject: [PATCH] drm/panfrost: don't use pfdevfreq.busy_count to know if hw is
@@ -245,7 +245,7 @@ index 360146f6f3d9..4c13dbae68fb 100644
  		/* If there are any jobs in the HW queue, we're not idle */
  		if (atomic_read(&js->queue[i].sched.hw_rq_count))
 
-From 1a29b20297e3cfb87ccd6c2a05b385b1a3adf099 Mon Sep 17 00:00:00 2001
+From ea9025c031304c7be35949d16d0963a7b34b23b4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
 Date: Fri, 10 Jul 2020 11:53:59 +0200
 Subject: [PATCH] drm/panfrost: introduce panfrost_devfreq struct
@@ -262,10 +262,10 @@ Signed-off-by: Rob Herring <robh@kernel.org>
 Link: https://patchwork.freedesktop.org/patch/msgid/20200710095409.407087-5-peron.clem@gmail.com
 (cherry picked from commit 9bfacfc82f903b066b0b63460d5b7943705048a4)
 ---
- drivers/gpu/drm/panfrost/panfrost_devfreq.c | 76 ++++++++++++++++-------------
- drivers/gpu/drm/panfrost/panfrost_devfreq.h | 20 +++++++-
- drivers/gpu/drm/panfrost/panfrost_device.h  | 11 ++---
- drivers/gpu/drm/panfrost/panfrost_job.c     |  6 +--
+ drivers/gpu/drm/panfrost/panfrost_devfreq.c | 76 ++++++++++++---------
+ drivers/gpu/drm/panfrost/panfrost_devfreq.h | 20 +++++-
+ drivers/gpu/drm/panfrost/panfrost_device.h  | 11 +--
+ drivers/gpu/drm/panfrost/panfrost_job.c     |  6 +-
  4 files changed, 66 insertions(+), 47 deletions(-)
 
 diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
@@ -475,7 +475,7 @@ index 0611beffc8d0..0697f8d5aa34 100644
  
  #endif /* __PANFROST_DEVFREQ_H__ */
 diff --git a/drivers/gpu/drm/panfrost/panfrost_device.h b/drivers/gpu/drm/panfrost/panfrost_device.h
-index c30c719a8059..2efa59c9d1c5 100644
+index 3c4a85213c15..438340af60e4 100644
 --- a/drivers/gpu/drm/panfrost/panfrost_device.h
 +++ b/drivers/gpu/drm/panfrost/panfrost_device.h
 @@ -13,6 +13,8 @@
@@ -487,7 +487,7 @@ index c30c719a8059..2efa59c9d1c5 100644
  struct panfrost_device;
  struct panfrost_mmu;
  struct panfrost_job_slot;
-@@ -107,14 +109,7 @@ struct panfrost_device {
+@@ -110,14 +112,7 @@ struct panfrost_device {
  	struct list_head shrinker_list;
  	struct shrinker shrinker;
  
@@ -535,7 +535,7 @@ index 4c13dbae68fb..30e7b7196dab 100644
  				dma_fence_signal_locked(job->done_fence);
  				pm_runtime_put_autosuspend(pfdev->dev);
 
-From c0bae02328a32aabc9cd41f37ab93623ea2ea3e3 Mon Sep 17 00:00:00 2001
+From 62e01b7a0c795866ae9190502c4fc7a2e58d1af7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
 Date: Fri, 10 Jul 2020 11:54:00 +0200
 Subject: [PATCH] drm/panfrost: use spinlock instead of atomic
@@ -552,8 +552,8 @@ Signed-off-by: Rob Herring <robh@kernel.org>
 Link: https://patchwork.freedesktop.org/patch/msgid/20200710095409.407087-6-peron.clem@gmail.com
 (cherry picked from commit ed85df3f60740bb4be23fbc2db283d59b361a834)
 ---
- drivers/gpu/drm/panfrost/panfrost_devfreq.c | 43 +++++++++++++++++++++--------
- drivers/gpu/drm/panfrost/panfrost_devfreq.h |  9 +++++-
+ drivers/gpu/drm/panfrost/panfrost_devfreq.c | 43 +++++++++++++++------
+ drivers/gpu/drm/panfrost/panfrost_devfreq.h |  9 ++++-
  2 files changed, 40 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
@@ -681,7 +681,7 @@ index 0697f8d5aa34..3392df1020be 100644
  
  int panfrost_devfreq_init(struct panfrost_device *pfdev);
 
-From f2c14c5a166e0d30ef41f6b4e4b8e7904dc931da Mon Sep 17 00:00:00 2001
+From 7e50adb1711d8961d92978c893dd134916c2e00e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
 Date: Fri, 10 Jul 2020 11:54:01 +0200
 Subject: [PATCH] drm/panfrost: properly handle error in probe
@@ -701,7 +701,7 @@ Signed-off-by: Rob Herring <robh@kernel.org>
 Link: https://patchwork.freedesktop.org/patch/msgid/20200710095409.407087-7-peron.clem@gmail.com
 (cherry picked from commit 81f2fbe62cb54b6cf3d91078c4d49451ba7b9877)
 ---
- drivers/gpu/drm/panfrost/panfrost_devfreq.c | 25 +++++++++++++++++++------
+ drivers/gpu/drm/panfrost/panfrost_devfreq.c | 25 ++++++++++++++++-----
  drivers/gpu/drm/panfrost/panfrost_devfreq.h |  1 +
  2 files changed, 20 insertions(+), 6 deletions(-)
 
@@ -782,7 +782,7 @@ index 3392df1020be..210269944687 100644
  	ktime_t busy_time;
  	ktime_t idle_time;
 
-From 6d5816fcaa6621b0f7bb9c07bdc4a74696b0d4f6 Mon Sep 17 00:00:00 2001
+From 5d949d4ed37c756906e23402414510f5411cec92 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
 Date: Fri, 10 Jul 2020 11:54:04 +0200
 Subject: [PATCH] drm/panfrost: dynamically alloc regulators
@@ -839,7 +839,7 @@ index 36b5c8fea3eb..f1474b961def 100644
  
  static void panfrost_pm_domain_fini(struct panfrost_device *pfdev)
 diff --git a/drivers/gpu/drm/panfrost/panfrost_device.h b/drivers/gpu/drm/panfrost/panfrost_device.h
-index 2efa59c9d1c5..953f7536a773 100644
+index 438340af60e4..2e9cbd1c4a58 100644
 --- a/drivers/gpu/drm/panfrost/panfrost_device.h
 +++ b/drivers/gpu/drm/panfrost/panfrost_device.h
 @@ -22,7 +22,6 @@ struct panfrost_job;
@@ -850,7 +850,7 @@ index 2efa59c9d1c5..953f7536a773 100644
  #define MAX_PM_DOMAINS 3
  
  struct panfrost_features {
-@@ -81,7 +80,7 @@ struct panfrost_device {
+@@ -84,7 +83,7 @@ struct panfrost_device {
  	void __iomem *iomem;
  	struct clk *clock;
  	struct clk *bus_clock;
@@ -860,7 +860,7 @@ index 2efa59c9d1c5..953f7536a773 100644
  	/* pm_domains for devices with more than one. */
  	struct device *pm_domain_devs[MAX_PM_DOMAINS];
 
-From 132fdf3d6a3bb089fa4e7aab7306d98dfeff3273 Mon Sep 17 00:00:00 2001
+From 56d41e137735c38c544fa9d17a1194c72e35f24e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Cl=C3=A9ment=20P=C3=A9ron?= <peron.clem@gmail.com>
 Date: Fri, 10 Jul 2020 11:54:05 +0200
 Subject: [PATCH] drm/panfrost: add regulators to devfreq
@@ -881,9 +881,9 @@ Signed-off-by: Rob Herring <robh@kernel.org>
 Link: https://patchwork.freedesktop.org/patch/msgid/20200710095409.407087-11-peron.clem@gmail.com
 (cherry picked from commit fd587ff01d59554144e2fd20f4113638a45c7c4e)
 ---
- drivers/gpu/drm/panfrost/panfrost_devfreq.c | 29 +++++++++++++++++++++++++----
+ drivers/gpu/drm/panfrost/panfrost_devfreq.c | 29 ++++++++++++++++++---
  drivers/gpu/drm/panfrost/panfrost_devfreq.h |  2 ++
- drivers/gpu/drm/panfrost/panfrost_device.c  |  9 ++++++---
+ drivers/gpu/drm/panfrost/panfrost_device.c  |  9 ++++---
  3 files changed, 33 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
@@ -977,7 +977,7 @@ index f1474b961def..e6896733838a 100644
  	err = panfrost_reset_init(pfdev);
  	if (err) {
 
-From d54c64a7033c7d9a55ec3a455a93ccfa09ba9549 Mon Sep 17 00:00:00 2001
+From f419363093174890d439aa4b92b1a06690ed0aec Mon Sep 17 00:00:00 2001
 From: Antonio Borneo <antonio.borneo@st.com>
 Date: Wed, 8 Jul 2020 16:08:36 +0200
 Subject: [PATCH] drm/bridge/synopsys: dsi: allow LP commands in video mode
@@ -999,7 +999,7 @@ Link: https://patchwork.freedesktop.org/patch/msgid/20200708140836.32418-1-yanni
  1 file changed, 8 insertions(+)
 
 diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
-index d580b2aa4ce9..d41ce1de1067 100644
+index 979acaa90d00..317d5093b951 100644
 --- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
 +++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
 @@ -89,6 +89,7 @@
@@ -1010,9 +1010,9 @@ index d580b2aa4ce9..d41ce1de1067 100644
  #define VID_MODE_VPG_ENABLE		BIT(16)
  #define VID_MODE_VPG_HORIZONTAL		BIT(24)
  
-@@ -367,6 +368,13 @@ static void dw_mipi_message_config(struct dw_mipi_dsi *dsi,
+@@ -366,6 +367,13 @@ static void dw_mipi_message_config(struct dw_mipi_dsi *dsi,
+ 		val |= CMD_MODE_ALL_LP;
  
- 	dsi_write(dsi, DSI_LPCLK_CTRL, lpm ? 0 : PHY_TXREQUESTCLKHS);
  	dsi_write(dsi, DSI_CMD_MODE_CFG, val);
 +
 +	val = dsi_read(dsi, DSI_VID_MODE_CFG);
@@ -1025,7 +1025,7 @@ index d580b2aa4ce9..d41ce1de1067 100644
  
  static int dw_mipi_dsi_gen_pkt_hdr_write(struct dw_mipi_dsi *dsi, u32 hdr_val)
 
-From 071e4591b5ddac631fe65bd2e527d7ca28105c5b Mon Sep 17 00:00:00 2001
+From e2dbae4d3faebaa469a8c784890916369abe15f1 Mon Sep 17 00:00:00 2001
 From: Antonio Borneo <antonio.borneo@st.com>
 Date: Wed, 1 Jul 2020 16:31:31 +0200
 Subject: [PATCH] drm/bridge/synopsys: dsi: allow sending longer LP commands
@@ -1051,7 +1051,7 @@ Link: https://patchwork.freedesktop.org/patch/msgid/20200701143131.841-1-yannick
  1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
-index d41ce1de1067..e9a0f42ff99f 100644
+index 317d5093b951..8510a84c4c63 100644
 --- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
 +++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
 @@ -361,6 +361,15 @@ static void dw_mipi_message_config(struct dw_mipi_dsi *dsi,
@@ -1070,7 +1070,7 @@ index d41ce1de1067..e9a0f42ff99f 100644
  	if (msg->flags & MIPI_DSI_MSG_REQ_ACK)
  		val |= ACK_RQST_EN;
  	if (lpm)
-@@ -619,14 +628,6 @@ static void dw_mipi_dsi_dpi_config(struct dw_mipi_dsi *dsi,
+@@ -624,14 +633,6 @@ static void dw_mipi_dsi_dpi_config(struct dw_mipi_dsi *dsi,
  	dsi_write(dsi, DSI_DPI_VCID, DPI_VCID(dsi->channel));
  	dsi_write(dsi, DSI_DPI_COLOR_CODING, color);
  	dsi_write(dsi, DSI_DPI_CFG_POL, val);
@@ -1086,7 +1086,7 @@ index d41ce1de1067..e9a0f42ff99f 100644
  
  static void dw_mipi_dsi_packet_handler_config(struct dw_mipi_dsi *dsi)
 
-From b3ba2bd08c57aedc749e4f3e646b4b773147866b Mon Sep 17 00:00:00 2001
+From 9a8fb965c1b80a9e81ecf47046a7f0a406c2ac64 Mon Sep 17 00:00:00 2001
 From: Angelo Ribeiro <Angelo.Ribeiro@synopsys.com>
 Date: Mon, 6 Apr 2020 15:49:03 +0200
 Subject: [PATCH] drm/bridge: dw-mipi-dsi.c: Add VPG runtime config through
@@ -1116,7 +1116,7 @@ Signed-off-by: Neil Armstrong <narmstrong@baylibre.com>
 Link: https://patchwork.freedesktop.org/patch/msgid/a809feb7d7153a92e323416f744f1565e995da01.1586180592.git.angelo.ribeiro@synopsys.com
 (cherry picked from commit e2435d69204c1f041e5742cac9af301021afa46f)
 ---
- drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c | 98 ++++++++++++++++++++++++---
+ drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c | 98 +++++++++++++++++--
  1 file changed, 90 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
@@ -1270,7 +1270,7 @@ index 8510a84c4c63..0b3825a4fbdb 100644
  
  #else
 
-From b48c8b2c43459f3c3bf28ffdec42553844412a83 Mon Sep 17 00:00:00 2001
+From f24266b12dfd5bfe00753b23926908eba6120533 Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <narmstrong@baylibre.com>
 Date: Mon, 7 Sep 2020 12:27:11 +0200
 Subject: [PATCH] drm/bridge: dw-mipi-dsi: fix dw_mipi_dsi_debugfs_show/write
@@ -1317,7 +1317,7 @@ index 0b3825a4fbdb..52f5c5a2ed64 100644
  	struct debugfs_entries *vpg = data;
  
 
-From 0765583a5df3824d6347f89088656d52f70d9de0 Mon Sep 17 00:00:00 2001
+From 55c320fd697feb57964bcbe6e6044144d4ff7cf6 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Mon, 7 Sep 2020 13:24:25 +0200
 Subject: [PATCH] drm: allow limiting the scatter list size.
@@ -1371,10 +1371,10 @@ index 519ce4427fce..d7050ab95946 100644
  		if (IS_ERR(sgt))
  			return sgt;
 diff --git a/drivers/gpu/drm/drm_gem_shmem_helper.c b/drivers/gpu/drm/drm_gem_shmem_helper.c
-index 4b7cfbac4daa..0a952f27c184 100644
+index 22a5d58a7eaa..2d474c65f64a 100644
 --- a/drivers/gpu/drm/drm_gem_shmem_helper.c
 +++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
-@@ -656,7 +656,7 @@ struct sg_table *drm_gem_shmem_get_sg_table(struct drm_gem_object *obj)
+@@ -661,7 +661,7 @@ struct sg_table *drm_gem_shmem_get_sg_table(struct drm_gem_object *obj)
  
  	WARN_ON(shmem->base.import_attach);
  
@@ -1532,7 +1532,7 @@ index 723df142a981..47e2935b8c68 100644
  		err = PTR_ERR(bo->sgt);
  		goto put_pages;
 diff --git a/drivers/gpu/drm/vgem/vgem_drv.c b/drivers/gpu/drm/vgem/vgem_drv.c
-index a775feda1cc7..4f0fd71d2da1 100644
+index 313339bbff90..15dd41e67de3 100644
 --- a/drivers/gpu/drm/vgem/vgem_drv.c
 +++ b/drivers/gpu/drm/vgem/vgem_drv.c
 @@ -321,7 +321,7 @@ static struct sg_table *vgem_prime_get_sg_table(struct drm_gem_object *obj)
@@ -1573,7 +1573,7 @@ index 9af7422b44cf..bf141e74a1c2 100644
  				     int flags);
  
 
-From 0839a46485ed6cca60e13a706b8501267bd23bfa Mon Sep 17 00:00:00 2001
+From e15a7555aa0000f4a4a4029ffa24be65bb0d1c98 Mon Sep 17 00:00:00 2001
 From: Marek Szyprowski <m.szyprowski@samsung.com>
 Date: Fri, 8 May 2020 16:04:44 +0200
 Subject: [PATCH] drm: prime: add common helper to check scatterlist contiguity
@@ -1587,8 +1587,8 @@ Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
 Reviewed-by: Robin Murphy <robin.murphy@arm.com>
 (cherry picked from commit d46e7ae24b81533d21edfa90914d27efa0c5f85d)
 ---
- drivers/gpu/drm/drm_gem_cma_helper.c | 23 +++--------------------
- drivers/gpu/drm/drm_prime.c          | 31 +++++++++++++++++++++++++++++++
+ drivers/gpu/drm/drm_gem_cma_helper.c | 23 +++------------------
+ drivers/gpu/drm/drm_prime.c          | 31 ++++++++++++++++++++++++++++
  include/drm/drm_prime.h              |  2 ++
  3 files changed, 36 insertions(+), 20 deletions(-)
 
@@ -1682,7 +1682,7 @@ index bf141e74a1c2..0f69f9fbf12c 100644
  struct drm_gem_object *drm_gem_prime_import_dev(struct drm_device *dev,
  						struct dma_buf *dma_buf,
 
-From 4e60d2c4b502537362bae39f3d15b56c41a20648 Mon Sep 17 00:00:00 2001
+From 5cdd87e5062281972bd7aaa56fde7ecaa5d92e58 Mon Sep 17 00:00:00 2001
 From: Marek Szyprowski <m.szyprowski@samsung.com>
 Date: Fri, 8 May 2020 16:05:14 +0200
 Subject: [PATCH] drm: prime: use sgtable iterators in
@@ -1700,7 +1700,7 @@ Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
 Reviewed-by: Robin Murphy <robin.murphy@arm.com>
 (cherry picked from commit 0552daac2d18fc92c71c94492476b8eb521227e9)
 ---
- drivers/gpu/drm/drm_prime.c | 49 ++++++++++++++-------------------------------
+ drivers/gpu/drm/drm_prime.c | 49 ++++++++++++-------------------------
  1 file changed, 15 insertions(+), 34 deletions(-)
 
 diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
@@ -1769,7 +1769,7 @@ index 5a134c63856f..9d2643f2d9e7 100644
  }
  EXPORT_SYMBOL(drm_prime_sg_to_page_addr_arrays);
 
-From ec3929e32f4ca8176edcb0d5ba72ea2051ccfd11 Mon Sep 17 00:00:00 2001
+From 6a05430c40bfa9ce39cc2cb776125370c63a04f8 Mon Sep 17 00:00:00 2001
 From: Marek Szyprowski <m.szyprowski@samsung.com>
 Date: Mon, 11 May 2020 12:27:54 +0200
 Subject: [PATCH] drm: core: fix common struct sg_table related issues
@@ -1821,7 +1821,7 @@ index 03e01b000f7a..0fe3c496002a 100644
  		mb(); /*Make sure that all cache line entry is flushed*/
  
 diff --git a/drivers/gpu/drm/drm_gem_shmem_helper.c b/drivers/gpu/drm/drm_gem_shmem_helper.c
-index 0a952f27c184..d77c9f8ff26c 100644
+index 2d474c65f64a..e00616d94f26 100644
 --- a/drivers/gpu/drm/drm_gem_shmem_helper.c
 +++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
 @@ -126,8 +126,8 @@ void drm_gem_shmem_free_object(struct drm_gem_object *obj)
@@ -1845,7 +1845,7 @@ index 0a952f27c184..d77c9f8ff26c 100644
  	sg_free_table(shmem->sgt);
  	kfree(shmem->sgt);
  	shmem->sgt = NULL;
-@@ -697,12 +696,17 @@ struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_object *obj)
+@@ -702,12 +701,17 @@ struct sg_table *drm_gem_shmem_get_pages_sgt(struct drm_gem_object *obj)
  		goto err_put_pages;
  	}
  	/* Map the pages for use by the h/w. */
@@ -1903,7 +1903,7 @@ index 9d2643f2d9e7..11fe9ff76fd5 100644
  	kfree(sgt);
  }
 
-From 03fcee5f1d9c78e00f2000cf87843020c5fb1634 Mon Sep 17 00:00:00 2001
+From a52d647dc6b6d5837607f262b402150882ee9a3c Mon Sep 17 00:00:00 2001
 From: Marek Szyprowski <m.szyprowski@samsung.com>
 Date: Thu, 30 Apr 2020 14:02:47 +0200
 Subject: [PATCH] drm: rockchip: use common helper for a scatterlist contiguity
@@ -1956,7 +1956,7 @@ index 0055d86576f7..d1559146dcce 100644
  		dma_unmap_sg(drm->dev, sg->sgl, sg->nents,
  			     DMA_BIDIRECTIONAL);
 
-From 11f9a73528dc2bd14e6d7e54cb8df803478eef68 Mon Sep 17 00:00:00 2001
+From c76a0a4241dd17229e5f752b20f4f46f8ccd2b17 Mon Sep 17 00:00:00 2001
 From: Marek Szyprowski <m.szyprowski@samsung.com>
 Date: Tue, 28 Apr 2020 13:10:01 +0200
 Subject: [PATCH] drm: rockchip: fix common struct sg_table related issues
@@ -1988,7 +1988,7 @@ Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Reviewed-by: Robin Murphy <robin.murphy@arm.com>
 (cherry picked from commit 82c245b592da791c63316e7a82d9b9d01552c0c5)
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 23 ++++++++++-------------
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 23 +++++++++------------
  1 file changed, 10 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
@@ -2052,7 +2052,7 @@ index d1559146dcce..62e5d0970525 100644
  	}
  
 
-From 314b770980da1e7d968e8178194de70cbb44fd6c Mon Sep 17 00:00:00 2001
+From 092e0085104b496f5e95bd65fcf619d1f44376bb Mon Sep 17 00:00:00 2001
 From: Robin Murphy <robin.murphy@arm.com>
 Date: Thu, 3 Sep 2020 14:59:23 +0100
 Subject: [PATCH] drm/panfrost: Set DMA max segment size
@@ -2071,10 +2071,10 @@ Link: https://patchwork.freedesktop.org/patch/msgid/04371bc36512076b7feee07f854e
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-index e0f190e43813..eea049c640a6 100644
+index fac03c348904..2aae636f1cf5 100644
 --- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
 +++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-@@ -344,6 +344,7 @@ int panfrost_gpu_init(struct panfrost_device *pfdev)
+@@ -361,6 +361,7 @@ int panfrost_gpu_init(struct panfrost_device *pfdev)
  
  	dma_set_mask_and_coherent(pfdev->dev,
  		DMA_BIT_MASK(FIELD_GET(0xff00, pfdev->features.mmu_features)));
@@ -2083,7 +2083,7 @@ index e0f190e43813..eea049c640a6 100644
  	irq = platform_get_irq_byname(to_platform_device(pfdev->dev), "gpu");
  	if (irq <= 0)
 
-From 99d273baa069a7838597fdd601e01248d12c2fd1 Mon Sep 17 00:00:00 2001
+From acc27ea1517e7fb2a605a1d1c87cf9f93a691763 Mon Sep 17 00:00:00 2001
 From: Alex Dewar <alex.dewar90@gmail.com>
 Date: Wed, 9 Sep 2020 20:02:08 +0100
 Subject: [PATCH] drm/bridge: dw-mipi-dsi: Use kmemdup cf. kmalloc+memcpy
@@ -2121,7 +2121,7 @@ index 52f5c5a2ed64..7e9a62ad56e8 100644
  		debugfs_create_file(dsi->debugfs_vpg[i].name, 0644,
  				    dsi->debugfs, &dsi->debugfs_vpg[i],
 
-From 0d1797eb5960177619add1f2ad6f2e57341a628b Mon Sep 17 00:00:00 2001
+From d8e81310ce7d1483d86ef248075a4079abb66956 Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <narmstrong@baylibre.com>
 Date: Fri, 4 Sep 2020 14:55:31 +0200
 Subject: [PATCH] drm/bridge: dw-mipi-dsi: permit configuring the escape clock
@@ -2136,7 +2136,7 @@ Reviewed-by: Philippe Cornu <philippe.cornu@st.com>
 Link: https://patchwork.freedesktop.org/patch/msgid/20200904125531.15248-1-narmstrong@baylibre.com
 (cherry picked from commit a328ca7e4af347e47742f36933df0fdac1c24ea5)
 ---
- drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c | 25 ++++++++++++++++++++-----
+ drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c | 25 +++++++++++++++----
  include/drm/bridge/dw_mipi_dsi.h              |  1 +
  2 files changed, 21 insertions(+), 5 deletions(-)
 

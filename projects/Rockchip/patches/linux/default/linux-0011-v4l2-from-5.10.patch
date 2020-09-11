@@ -1,4 +1,4 @@
-From aac4c6e6f64b7bc56f8265cba1374a01322e3262 Mon Sep 17 00:00:00 2001
+From 76262168fabe21a99cd4ecb98e83b6f91bb1bdb5 Mon Sep 17 00:00:00 2001
 From: Pi-Hsun Shih <pihsun@chromium.org>
 Date: Fri, 14 Aug 2020 09:11:40 +0200
 Subject: [PATCH] media: v4l2-mem2mem: add v4l2_m2m_suspend, v4l2_m2m_resume
@@ -15,8 +15,8 @@ Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 (cherry picked from commit 911ea8ec42dea0e28083a6e92b1b4a5a0ad5acca)
 ---
- drivers/media/v4l2-core/v4l2-mem2mem.c | 41 ++++++++++++++++++++++++++++++++++
- include/media/v4l2-mem2mem.h           | 22 ++++++++++++++++++
+ drivers/media/v4l2-core/v4l2-mem2mem.c | 41 ++++++++++++++++++++++++++
+ include/media/v4l2-mem2mem.h           | 22 ++++++++++++++
  2 files changed, 63 insertions(+)
 
 diff --git a/drivers/media/v4l2-core/v4l2-mem2mem.c b/drivers/media/v4l2-core/v4l2-mem2mem.c
@@ -140,7 +140,7 @@ index 98753f00df7e..5a91b548ecc0 100644
   * v4l2_m2m_reqbufs() - multi-queue-aware REQBUFS multiplexer
   *
 
-From ea3a9782bc2717375bf236f11738c02d5148b8a8 Mon Sep 17 00:00:00 2001
+From 64fa4669c5a6d54d56ff3a12b925a79322b088b9 Mon Sep 17 00:00:00 2001
 From: Jernej Skrabec <jernej.skrabec@siol.net>
 Date: Tue, 25 Aug 2020 05:52:27 +0200
 Subject: [PATCH] media: uapi: h264: Update reference lists
@@ -163,9 +163,9 @@ Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 (cherry picked from commit e000e1fa4bdbd783149e7f97cf3be61e1c0bab8c)
 ---
- .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 44 +++++++++++++++++++++-
- drivers/staging/media/sunxi/cedrus/cedrus_h264.c   |  6 +--
- include/media/h264-ctrls.h                         | 21 ++++++++---
+ .../media/v4l/ext-ctrls-codec.rst             | 44 ++++++++++++++++++-
+ .../staging/media/sunxi/cedrus/cedrus_h264.c  |  6 +--
+ include/media/h264-ctrls.h                    | 21 ++++++---
  3 files changed, 60 insertions(+), 11 deletions(-)
 
 diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
@@ -303,7 +303,7 @@ index 080fd1293c42..3c613b84e5ae 100644
  	__u32 flags;
  };
 
-From 2abf5d0e3f8c932002c0aa44f486f53e8225e1d3 Mon Sep 17 00:00:00 2001
+From 0faf7459acb1754b714170fba9ea5485bd5661fd Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:28 +0200
 Subject: [PATCH] media: uapi: h264: Further clarify scaling lists order
@@ -346,7 +346,7 @@ index df1c4fc5cb48..2cce412f5be1 100644
  ``V4L2_CID_MPEG_VIDEO_H264_SLICE_PARAMS (struct)``
      Specifies the slice parameters (as extracted from the bitstream)
 
-From 10ca864bd5385e820849556513562b879974bd95 Mon Sep 17 00:00:00 2001
+From bd6d8216c0f4b8e4425a6f4e885f37de1316de43 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:29 +0200
 Subject: [PATCH] media: uapi: h264: Split prediction weight parameters
@@ -373,14 +373,14 @@ Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 (cherry picked from commit eb44c6c9c236b1568985816254faf520fde21776)
 ---
- .../userspace-api/media/v4l/ext-ctrls-codec.rst       | 19 ++++++++++++-------
- drivers/media/v4l2-core/v4l2-ctrls.c                  |  8 ++++++++
- drivers/staging/media/sunxi/cedrus/cedrus.c           |  7 +++++++
- drivers/staging/media/sunxi/cedrus/cedrus.h           |  1 +
- drivers/staging/media/sunxi/cedrus/cedrus_dec.c       |  2 ++
- drivers/staging/media/sunxi/cedrus/cedrus_h264.c      | 12 +++---------
- include/media/h264-ctrls.h                            | 12 ++++++++++--
- include/media/v4l2-ctrls.h                            |  2 ++
+ .../media/v4l/ext-ctrls-codec.rst             | 19 ++++++++++++-------
+ drivers/media/v4l2-core/v4l2-ctrls.c          |  8 ++++++++
+ drivers/staging/media/sunxi/cedrus/cedrus.c   |  7 +++++++
+ drivers/staging/media/sunxi/cedrus/cedrus.h   |  1 +
+ .../staging/media/sunxi/cedrus/cedrus_dec.c   |  2 ++
+ .../staging/media/sunxi/cedrus/cedrus_h264.c  | 12 +++---------
+ include/media/h264-ctrls.h                    | 12 ++++++++++--
+ include/media/v4l2-ctrls.h                    |  2 ++
  8 files changed, 45 insertions(+), 18 deletions(-)
 
 diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
@@ -596,7 +596,7 @@ index f40e2cbb21d3..cb25f345e9ad 100644
  	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
  	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
 
-From b9ab1fbb981ac04f89e2a2a8c22a3e79d9089718 Mon Sep 17 00:00:00 2001
+From 11209dff660a0f70265d83d6788c6a7257dfe2d7 Mon Sep 17 00:00:00 2001
 From: Philipp Zabel <p.zabel@pengutronix.de>
 Date: Tue, 25 Aug 2020 05:52:30 +0200
 Subject: [PATCH] media: uapi: h264: Clarify pic_order_cnt_bit_size field
@@ -635,7 +635,7 @@ index 9e4421a7c6a6..591d3d35c429 100644
        - ``cabac_init_idc``
        -
 
-From 49086ddc8b141ed75f1023e3ebcb87a7d0c224c0 Mon Sep 17 00:00:00 2001
+From ae3e497f51c1905beb36252fc33b33118f09adb6 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:31 +0200
 Subject: [PATCH] media: uapi: h264: Increase size of 'first_mb_in_slice' field
@@ -691,7 +691,7 @@ index 31c6f4c5963b..9a6722edf004 100644
  	__u8 pic_parameter_set_id;
  	__u8 colour_plane_id;
 
-From d1bcf7e7272530af2327ee7c6bcbf9de3bddf697 Mon Sep 17 00:00:00 2001
+From 60328a33b22e49d4e0cfdb2554b955eb02df7caf Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:32 +0200
 Subject: [PATCH] media: uapi: h264: Clean DPB entry interface
@@ -712,10 +712,10 @@ Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 (cherry picked from commit c02ff21952a6a19ca375b9dc4f9a5609616a82b8)
 ---
- .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 24 +++++++---------------
- drivers/media/v4l2-core/v4l2-h264.c                |  4 ++--
- drivers/staging/media/rkvdec/rkvdec-h264.c         | 17 +++++++--------
- include/media/h264-ctrls.h                         |  2 +-
+ .../media/v4l/ext-ctrls-codec.rst             | 24 ++++++-------------
+ drivers/media/v4l2-core/v4l2-h264.c           |  4 ++--
+ drivers/staging/media/rkvdec/rkvdec-h264.c    | 17 ++++++-------
+ include/media/h264-ctrls.h                    |  2 +-
  4 files changed, 19 insertions(+), 28 deletions(-)
 
 diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
@@ -832,7 +832,7 @@ index 9a6722edf004..0529e75cce5f 100644
  	__s32 top_field_order_cnt;
  	__s32 bottom_field_order_cnt;
 
-From 44d417cc4d3f820149995948f9cb0d2ef02c7562 Mon Sep 17 00:00:00 2001
+From 4d1da3e58a2d159c763dec53aecf6d1909282eb3 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:33 +0200
 Subject: [PATCH] media: uapi: h264: Increase size of DPB entry pic_num
@@ -853,10 +853,10 @@ Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 (cherry picked from commit f9879eb378295e8a912d2d10c872c45f3e19421b)
 ---
- Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst |  9 ++++++---
- drivers/media/v4l2-core/v4l2-ctrls.c                      | 13 +++++++++++++
- include/media/h264-ctrls.h                                |  3 ++-
- include/media/v4l2-h264.h                                 |  2 +-
+ .../userspace-api/media/v4l/ext-ctrls-codec.rst     |  9 ++++++---
+ drivers/media/v4l2-core/v4l2-ctrls.c                | 13 +++++++++++++
+ include/media/h264-ctrls.h                          |  3 ++-
+ include/media/v4l2-h264.h                           |  2 +-
  4 files changed, 22 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
@@ -954,7 +954,7 @@ index bc9ebb560ccf..1a5f26fc2a9a 100644
  	} refs[V4L2_H264_NUM_DPB_ENTRIES];
  	s32 cur_pic_order_count;
 
-From cc7011362e4d3327874deb6d585c610558a10bc4 Mon Sep 17 00:00:00 2001
+From ca8ae105ed82283e6c309b475d8e7179354324a6 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:34 +0200
 Subject: [PATCH] media: uapi: h264: Drop SLICE_PARAMS 'size' field
@@ -1035,7 +1035,7 @@ index 91f6f0d43e11..77d0ec51ae43 100644
  	__u32 start_byte_offset;
  
 
-From 8a51555783ee2d5cd3471c4fc88f666399bd52e3 Mon Sep 17 00:00:00 2001
+From 92ee8a813053a1d78d8741bef394e4ecadfa4472 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:35 +0200
 Subject: [PATCH] media: uapi: h264: Clarify SLICE_BASED mode
@@ -1064,8 +1064,8 @@ Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 (cherry picked from commit 2287c5e65cbcc99633c412dbfe1d39bd9f7bf1ce)
 ---
- .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 39 ++++++----------------
- include/media/h264-ctrls.h                         |  4 ---
+ .../media/v4l/ext-ctrls-codec.rst             | 39 +++++--------------
+ include/media/h264-ctrls.h                    |  4 --
  2 files changed, 10 insertions(+), 33 deletions(-)
 
 diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
@@ -1169,7 +1169,7 @@ index 77d0ec51ae43..e4cae02a765f 100644
  	__s32 top_field_order_cnt;
  	__s32 bottom_field_order_cnt;
 
-From 0ed1639eb2c39ddca4a54bf6132657d3e4e6c184 Mon Sep 17 00:00:00 2001
+From 485c135140eea32378027c598d3ae0e9366c43e3 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:36 +0200
 Subject: [PATCH] media: uapi: h264: Clean slice invariants syntax elements
@@ -1213,15 +1213,15 @@ Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 (cherry picked from commit d9358563179a7f01f9020ebbe201c7e54ba3af48)
 ---
- .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 86 +++++++++++-----------
- drivers/media/v4l2-core/v4l2-ctrls.c               |  7 ++
- drivers/media/v4l2-core/v4l2-h264.c                |  8 +-
- drivers/staging/media/hantro/hantro_g1_h264_dec.c  | 21 +++---
- drivers/staging/media/hantro/hantro_h264.c         |  3 +-
- drivers/staging/media/rkvdec/rkvdec-h264.c         |  6 +-
- drivers/staging/media/sunxi/cedrus/cedrus_h264.c   |  9 +--
- include/media/h264-ctrls.h                         | 39 +++++-----
- include/media/v4l2-h264.h                          |  1 -
+ .../media/v4l/ext-ctrls-codec.rst             | 86 +++++++++----------
+ drivers/media/v4l2-core/v4l2-ctrls.c          |  7 ++
+ drivers/media/v4l2-core/v4l2-h264.c           |  8 +-
+ .../staging/media/hantro/hantro_g1_h264_dec.c | 21 +++--
+ drivers/staging/media/hantro/hantro_h264.c    |  3 +-
+ drivers/staging/media/rkvdec/rkvdec-h264.c    |  6 +-
+ .../staging/media/sunxi/cedrus/cedrus_h264.c  |  9 +-
+ include/media/h264-ctrls.h                    | 39 +++++----
+ include/media/v4l2-h264.h                     |  1 -
  9 files changed, 90 insertions(+), 90 deletions(-)
 
 diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
@@ -1690,7 +1690,7 @@ index 1a5f26fc2a9a..f08ba181263d 100644
  		const struct v4l2_h264_dpb_entry dpb[V4L2_H264_NUM_DPB_ENTRIES]);
  
 
-From ca371b762ca1278521c8032a478a3ad3f9e03a18 Mon Sep 17 00:00:00 2001
+From d90e267c0415d43c0c31b8df54da4dc436b7811a Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:37 +0200
 Subject: [PATCH] media: uapi: h264: Rename and clarify
@@ -1752,7 +1752,7 @@ index 0c15ff938873..ec4799154438 100644
  struct v4l2_ctrl_h264_pps {
  	__u8 pic_parameter_set_id;
 
-From d8858326adbebde9fa273528c6d03970b6b50168 Mon Sep 17 00:00:00 2001
+From 583344e6788a73bac594a2add779bbf37c15ee8b Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:38 +0200
 Subject: [PATCH] media: hantro: Don't require unneeded H264_SLICE_PARAMS
@@ -1823,7 +1823,7 @@ index f066de6b592d..219283a06f52 100644
  	const struct v4l2_ctrl_h264_pps *pps;
  };
 
-From a41936be0e44cd4317a6cce088eb6625aef96ac5 Mon Sep 17 00:00:00 2001
+From 674c726901b50dea56126db32b47f82b08eb9b42 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:39 +0200
 Subject: [PATCH] media: rkvdec: Don't require unneeded H264_SLICE_PARAMS
@@ -1881,7 +1881,7 @@ index c8151328fb70..7c5129593921 100644
  		.per_request = true,
  		.mandatory = true,
 
-From 46d93c497a135bbebf8a46e457cbb1ccbc65187e Mon Sep 17 00:00:00 2001
+From 09a7df61c8eef6bda257ae9b88fc04077a7ae5cf Mon Sep 17 00:00:00 2001
 From: Jernej Skrabec <jernej.skrabec@siol.net>
 Date: Tue, 25 Aug 2020 05:52:40 +0200
 Subject: [PATCH] media: cedrus: h264: Properly configure reference field
@@ -1930,7 +1930,7 @@ index c8f626fdd3dd..1e89a8438f36 100644
  	}
  
 
-From 639f50ba7ef39ae5c7e3d954c4eb45e798d807e1 Mon Sep 17 00:00:00 2001
+From e70b1638286e53f1aefd39a3d8eb7b52f9ff1fa5 Mon Sep 17 00:00:00 2001
 From: Jernej Skrabec <jernej.skrabec@siol.net>
 Date: Tue, 25 Aug 2020 05:52:41 +0200
 Subject: [PATCH] media: cedrus: h264: Fix frame list construction
@@ -1994,7 +1994,7 @@ index 1e89a8438f36..fe041b444385 100644
  
  	output_buf = vb2_to_cedrus_buffer(&run->dst->vb2_buf);
 
-From 8fcba25193bcdb227cd399ef8f4fff04bd296aa6 Mon Sep 17 00:00:00 2001
+From f92c10c11004904c6bfc76dea875ed31f0324da9 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:42 +0200
 Subject: [PATCH] media: rkvdec: Drop unneeded per_request driver-specific
@@ -2078,7 +2078,7 @@ index 2fc9f46b6910..77a137cca88e 100644
  	struct v4l2_ctrl_config cfg;
  };
 
-From 6b4ad3335d579f5a867a7a320dad4e47f0a82e53 Mon Sep 17 00:00:00 2001
+From 96f834d7c8f3461420c25e306b4d0c7bf958ec9c Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:43 +0200
 Subject: [PATCH] media: rkvdec: Use H264_SCALING_MATRIX only when required
@@ -2150,7 +2150,7 @@ index 9f59dfb62d3f..d25c4a37e2af 100644
  	},
  	{
 
-From 2d1e9d1ee8c70cc956e5d4356fa4b0db16475639 Mon Sep 17 00:00:00 2001
+From 180e23baf9a3e06aaf0969b3b0486630e93d2107 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:44 +0200
 Subject: [PATCH] media: hantro: Use H264_SCALING_MATRIX only when required
@@ -2217,7 +2217,7 @@ index 089bfa9c625b..b1bdc00ac262 100644
  		src = (u32 *)&scaling->scaling_list_4x4[i];
  		for (j = 0; j < list_len_4x4 / 4; j++)
 
-From 4c2a7a45d1223e8b736fd2badd8e665cf06e3298 Mon Sep 17 00:00:00 2001
+From b91087482cd2212e3395d85b9da2cb2e4c59014f Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Tue, 25 Aug 2020 05:52:45 +0200
 Subject: [PATCH] media: cedrus: Use H264_SCALING_MATRIX only when required
@@ -2284,7 +2284,7 @@ index fe041b444385..28319351e909 100644
  
  	// clear status flags
 
-From f63d65cb5f9554f96a9dfd785f775da98bf7cb69 Mon Sep 17 00:00:00 2001
+From 83936ef87bfd6330fc68ad308f3302e7426eae7f Mon Sep 17 00:00:00 2001
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Date: Tue, 1 Sep 2020 11:09:26 +0200
 Subject: [PATCH] media: videobuf-dma-sg: number of pages should be unsigned
@@ -2396,7 +2396,7 @@ index 34450f7ad510..930ff8d454fc 100644
  };
  
 
-From 613f4cb124631154bfa17e944e6809031e32fc74 Mon Sep 17 00:00:00 2001
+From c71be8b367c711e39fc66aaf93e16db64ec606b3 Mon Sep 17 00:00:00 2001
 From: Alexandre Courbot <gnurou@gmail.com>
 Date: Thu, 27 Aug 2020 14:49:45 +0200
 Subject: [PATCH] media: v4l2-mem2mem: always consider OUTPUT queue during poll
@@ -2438,7 +2438,7 @@ index 6a80240e9228..121243e5bece 100644
  	spin_unlock_irqrestore(&dst_q->done_lock, flags);
  
 
-From 72d1b85060473b809d9450b54100a3e65331dea3 Mon Sep 17 00:00:00 2001
+From 60309b764515bdfb7cffdb1a67d16c70b4cec9e2 Mon Sep 17 00:00:00 2001
 From: Alexandre Courbot <gnurou@gmail.com>
 Date: Thu, 27 Aug 2020 14:49:46 +0200
 Subject: [PATCH] media: v4l2-mem2mem: simplify poll logic
@@ -2507,7 +2507,7 @@ index 121243e5bece..f626ba5ee3d9 100644
  	spin_unlock_irqrestore(&dst_q->done_lock, flags);
  
 
-From e12ddb183c1503d7f94320fd20e4e7f2828a0976 Mon Sep 17 00:00:00 2001
+From a3b57993cddfa272b054ace570066abf804d802b Mon Sep 17 00:00:00 2001
 From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Date: Fri, 18 Sep 2020 02:27:51 +0200
 Subject: [PATCH] media: cedrus: Propagate OUTPUT resolution to CAPTURE
@@ -2529,7 +2529,7 @@ Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 (cherry picked from commit 8c608272ec3e6926ae2e258e74e84777d932ddd6)
 ---
- drivers/staging/media/sunxi/cedrus/cedrus_video.c | 29 +++++++++++++++++++++--
+ .../staging/media/sunxi/cedrus/cedrus_video.c | 29 +++++++++++++++++--
  1 file changed, 27 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_video.c b/drivers/staging/media/sunxi/cedrus/cedrus_video.c
@@ -2594,7 +2594,7 @@ index 16d82309e7b6..667b86dde1ee 100644
  	return 0;
  }
 
-From 58605ff417174bf3310b01bcc7372a29425d1bdf Mon Sep 17 00:00:00 2001
+From ebdca71c351d5a1f3e0e868ea597bf27bc0f18a8 Mon Sep 17 00:00:00 2001
 From: Ezequiel Garcia <ezequiel@collabora.com>
 Date: Mon, 28 Sep 2020 16:03:34 +0200
 Subject: [PATCH] media: v4l2-mem2mem: Fix spurious v4l2_m2m_buf_done

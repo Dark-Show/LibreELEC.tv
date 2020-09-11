@@ -1,0 +1,442 @@
+From a690b809458aed43fae6aed3ab94aa931163dd9d Mon Sep 17 00:00:00 2001
+From: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date: Sat, 14 Nov 2020 11:55:06 +0800
+Subject: [PATCH] dmaengine: pl330: _prep_dma_memcpy: Fix wrong burst size
+
+Actually, burst size is equal to '1 << desc->rqcfg.brst_size'.
+we should use burst size, not desc->rqcfg.brst_size.
+
+dma memcpy performance on Rockchip RV1126
+@ 1512MHz A7, 1056MHz LPDDR3, 200MHz DMA:
+
+dmatest:
+
+/# echo dma0chan0 > /sys/module/dmatest/parameters/channel
+/# echo 4194304 > /sys/module/dmatest/parameters/test_buf_size
+/# echo 8 > /sys/module/dmatest/parameters/iterations
+/# echo y > /sys/module/dmatest/parameters/norandom
+/# echo y > /sys/module/dmatest/parameters/verbose
+/# echo 1 > /sys/module/dmatest/parameters/run
+
+dmatest: dma0chan0-copy0: result #1: 'test passed' with src_off=0x0 dst_off=0x0 len=0x400000
+dmatest: dma0chan0-copy0: result #2: 'test passed' with src_off=0x0 dst_off=0x0 len=0x400000
+dmatest: dma0chan0-copy0: result #3: 'test passed' with src_off=0x0 dst_off=0x0 len=0x400000
+dmatest: dma0chan0-copy0: result #4: 'test passed' with src_off=0x0 dst_off=0x0 len=0x400000
+dmatest: dma0chan0-copy0: result #5: 'test passed' with src_off=0x0 dst_off=0x0 len=0x400000
+dmatest: dma0chan0-copy0: result #6: 'test passed' with src_off=0x0 dst_off=0x0 len=0x400000
+dmatest: dma0chan0-copy0: result #7: 'test passed' with src_off=0x0 dst_off=0x0 len=0x400000
+dmatest: dma0chan0-copy0: result #8: 'test passed' with src_off=0x0 dst_off=0x0 len=0x400000
+
+Before:
+
+  dmatest: dma0chan0-copy0: summary 8 tests, 0 failures 48 iops 200338 KB/s (0)
+
+After this patch:
+
+  dmatest: dma0chan0-copy0: summary 8 tests, 0 failures 179 iops 734873 KB/s (0)
+
+After this patch and increase dma clk to 400MHz:
+
+  dmatest: dma0chan0-copy0: summary 8 tests, 0 failures 259 iops 1062929 KB/s (0)
+
+Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+---
+ drivers/dma/pl330.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index e9f0101d92fa..0f5c19370f6d 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -2799,7 +2799,7 @@ pl330_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dst,
+ 	 * If burst size is smaller than bus width then make sure we only
+ 	 * transfer one at a time to avoid a burst stradling an MFIFO entry.
+ 	 */
+-	if (desc->rqcfg.brst_size * 8 < pl330->pcfg.data_bus_width)
++	if (burst * 8 < pl330->pcfg.data_bus_width)
+ 		desc->rqcfg.brst_len = 1;
+ 
+ 	desc->bytes_requested = len;
+
+From 9c18c1edd37c5c5c2cc1cb8603edfd6cc8bec02b Mon Sep 17 00:00:00 2001
+From: Robin Murphy <robin.murphy@arm.com>
+Date: Mon, 26 Oct 2020 11:17:20 +0000
+Subject: [PATCH] clk: rockchip: Add appropriate arch dependencies
+
+There's no point offering support for 32-bit platforms to users
+configuring a 64-bit kernel - and vice-versa - unless they are
+explicitly interested in compile-testing.
+
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/72abb0f794b8ed77e274e8ee21c22e0bd3223dfd.1603710913.git.robin.murphy@arm.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+---
+ drivers/clk/rockchip/Kconfig | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/clk/rockchip/Kconfig b/drivers/clk/rockchip/Kconfig
+index 47cd6c5de837..effd05032e85 100644
+--- a/drivers/clk/rockchip/Kconfig
++++ b/drivers/clk/rockchip/Kconfig
+@@ -11,67 +11,77 @@ config COMMON_CLK_ROCKCHIP
+ if COMMON_CLK_ROCKCHIP
+ config CLK_PX30
+ 	bool "Rockchip PX30 clock controller support"
++	depends on (ARM64 || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for PX30 Clock Driver.
+ 
+ config CLK_RV110X
+ 	bool "Rockchip RV110x clock controller support"
++	depends on (ARM || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RV110x Clock Driver.
+ 
+ config CLK_RK3036
+ 	bool "Rockchip RK3036 clock controller support"
++	depends on (ARM || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RK3036 Clock Driver.
+ 
+ config CLK_RK312X
+ 	bool "Rockchip RK312x clock controller support"
++	depends on (ARM || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RK312x Clock Driver.
+ 
+ config CLK_RK3188
+ 	bool "Rockchip RK3188 clock controller support"
++	depends on (ARM || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RK3188 Clock Driver.
+ 
+ config CLK_RK322X
+ 	bool "Rockchip RK322x clock controller support"
++	depends on (ARM || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RK322x Clock Driver.
+ 
+ config CLK_RK3288
+ 	bool "Rockchip RK3288 clock controller support"
+-	depends on ARM
++	depends on (ARM || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RK3288 Clock Driver.
+ 
+ config CLK_RK3308
+ 	bool "Rockchip RK3308 clock controller support"
++	depends on (ARM64 || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RK3308 Clock Driver.
+ 
+ config CLK_RK3328
+ 	bool "Rockchip RK3328 clock controller support"
++	depends on (ARM64 || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RK3328 Clock Driver.
+ 
+ config CLK_RK3368
+ 	bool "Rockchip RK3368 clock controller support"
++	depends on (ARM64 || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RK3368 Clock Driver.
+ 
+ config CLK_RK3399
+ 	tristate "Rockchip RK3399 clock controller support"
++	depends on (ARM64 || COMPILE_TEST)
+ 	default y
+ 	help
+ 	  Build the driver for RK3399 Clock Driver.
+
+From cc1c6f94a8d8a3db5bdf21ffe4ed26e6edaa68ce Mon Sep 17 00:00:00 2001
+From: Xu Wang <vulab@iscas.ac.cn>
+Date: Fri, 27 Nov 2020 09:05:51 +0000
+Subject: [PATCH] clk: rockchip: Remove redundant null check before
+ clk_prepare_enable
+
+Because clk_prepare_enable() already checked NULL clock parameter,
+so the additional check is unnecessary, just remove it.
+
+Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20201127090551.50254-1-vulab@iscas.ac.cn
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+---
+ drivers/clk/rockchip/clk.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/clk/rockchip/clk.c b/drivers/clk/rockchip/clk.c
+index b443169dd408..336481bc6cc7 100644
+--- a/drivers/clk/rockchip/clk.c
++++ b/drivers/clk/rockchip/clk.c
+@@ -603,8 +603,7 @@ void rockchip_clk_protect_critical(const char *const clocks[],
+ 	for (i = 0; i < nclocks; i++) {
+ 		struct clk *clk = __clk_lookup(clocks[i]);
+ 
+-		if (clk)
+-			clk_prepare_enable(clk);
++		clk_prepare_enable(clk);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(rockchip_clk_protect_critical);
+
+From d398ff3d9edaa3a46ba7478a3b8d5e6841d5e64f Mon Sep 17 00:00:00 2001
+From: Johan Jonker <jbx6244@gmail.com>
+Date: Wed, 18 Nov 2020 14:58:16 +0100
+Subject: [PATCH] clk: rockchip: add CLK_SET_RATE_PARENT to sclk for rk3066a
+ i2s and uart clocks
+
+Add CLK_SET_RATE_PARENT to sclk for rk3066a i2s and uart clocks,
+so that the parent COMPOSITE_FRACMUX and COMPOSITE_NOMUX
+also update.
+
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Link: https://lore.kernel.org/r/20201118135822.9582-2-jbx6244@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+---
+ drivers/clk/rockchip/clk-rk3188.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/clk/rockchip/clk-rk3188.c b/drivers/clk/rockchip/clk-rk3188.c
+index 730020fcc7fe..db8c588139de 100644
+--- a/drivers/clk/rockchip/clk-rk3188.c
++++ b/drivers/clk/rockchip/clk-rk3188.c
+@@ -255,19 +255,19 @@ static struct rockchip_clk_branch common_spdif_fracmux __initdata =
+ 			RK2928_CLKSEL_CON(5), 8, 2, MFLAGS);
+ 
+ static struct rockchip_clk_branch common_uart0_fracmux __initdata =
+-	MUX(SCLK_UART0, "sclk_uart0", mux_sclk_uart0_p, 0,
++	MUX(SCLK_UART0, "sclk_uart0", mux_sclk_uart0_p, CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(13), 8, 2, MFLAGS);
+ 
+ static struct rockchip_clk_branch common_uart1_fracmux __initdata =
+-	MUX(SCLK_UART1, "sclk_uart1", mux_sclk_uart1_p, 0,
++	MUX(SCLK_UART1, "sclk_uart1", mux_sclk_uart1_p, CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(14), 8, 2, MFLAGS);
+ 
+ static struct rockchip_clk_branch common_uart2_fracmux __initdata =
+-	MUX(SCLK_UART2, "sclk_uart2", mux_sclk_uart2_p, 0,
++	MUX(SCLK_UART2, "sclk_uart2", mux_sclk_uart2_p, CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(15), 8, 2, MFLAGS);
+ 
+ static struct rockchip_clk_branch common_uart3_fracmux __initdata =
+-	MUX(SCLK_UART3, "sclk_uart3", mux_sclk_uart3_p, 0,
++	MUX(SCLK_UART3, "sclk_uart3", mux_sclk_uart3_p, CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(16), 8, 2, MFLAGS);
+ 
+ static struct rockchip_clk_branch common_clk_branches[] __initdata = {
+@@ -408,28 +408,28 @@ static struct rockchip_clk_branch common_clk_branches[] __initdata = {
+ 	COMPOSITE_NOMUX(0, "uart0_pre", "uart_src", 0,
+ 			RK2928_CLKSEL_CON(13), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(1), 8, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "uart0_frac", "uart0_pre", 0,
++	COMPOSITE_FRACMUX(0, "uart0_frac", "uart0_pre", CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(17), 0,
+ 			RK2928_CLKGATE_CON(1), 9, GFLAGS,
+ 			&common_uart0_fracmux),
+ 	COMPOSITE_NOMUX(0, "uart1_pre", "uart_src", 0,
+ 			RK2928_CLKSEL_CON(14), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(1), 10, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "uart1_frac", "uart1_pre", 0,
++	COMPOSITE_FRACMUX(0, "uart1_frac", "uart1_pre", CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(18), 0,
+ 			RK2928_CLKGATE_CON(1), 11, GFLAGS,
+ 			&common_uart1_fracmux),
+ 	COMPOSITE_NOMUX(0, "uart2_pre", "uart_src", 0,
+ 			RK2928_CLKSEL_CON(15), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(1), 12, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "uart2_frac", "uart2_pre", 0,
++	COMPOSITE_FRACMUX(0, "uart2_frac", "uart2_pre", CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(19), 0,
+ 			RK2928_CLKGATE_CON(1), 13, GFLAGS,
+ 			&common_uart2_fracmux),
+ 	COMPOSITE_NOMUX(0, "uart3_pre", "uart_src", 0,
+ 			RK2928_CLKSEL_CON(16), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(1), 14, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "uart3_frac", "uart3_pre", 0,
++	COMPOSITE_FRACMUX(0, "uart3_frac", "uart3_pre", CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(20), 0,
+ 			RK2928_CLKGATE_CON(1), 15, GFLAGS,
+ 			&common_uart3_fracmux),
+@@ -543,15 +543,15 @@ static struct clk_div_table div_aclk_cpu_t[] = {
+ };
+ 
+ static struct rockchip_clk_branch rk3066a_i2s0_fracmux __initdata =
+-	MUX(SCLK_I2S0, "sclk_i2s0", mux_sclk_i2s0_p, 0,
++	MUX(SCLK_I2S0, "sclk_i2s0", mux_sclk_i2s0_p, CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(2), 8, 2, MFLAGS);
+ 
+ static struct rockchip_clk_branch rk3066a_i2s1_fracmux __initdata =
+-	MUX(SCLK_I2S1, "sclk_i2s1", mux_sclk_i2s1_p, 0,
++	MUX(SCLK_I2S1, "sclk_i2s1", mux_sclk_i2s1_p, CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(3), 8, 2, MFLAGS);
+ 
+ static struct rockchip_clk_branch rk3066a_i2s2_fracmux __initdata =
+-	MUX(SCLK_I2S2, "sclk_i2s2", mux_sclk_i2s2_p, 0,
++	MUX(SCLK_I2S2, "sclk_i2s2", mux_sclk_i2s2_p, CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(4), 8, 2, MFLAGS);
+ 
+ static struct rockchip_clk_branch rk3066a_clk_branches[] __initdata = {
+@@ -615,21 +615,21 @@ static struct rockchip_clk_branch rk3066a_clk_branches[] __initdata = {
+ 	COMPOSITE_NOMUX(0, "i2s0_pre", "i2s_src", 0,
+ 			RK2928_CLKSEL_CON(2), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(0), 7, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "i2s0_frac", "i2s0_pre", 0,
++	COMPOSITE_FRACMUX(0, "i2s0_frac", "i2s0_pre", CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(6), 0,
+ 			RK2928_CLKGATE_CON(0), 8, GFLAGS,
+ 			&rk3066a_i2s0_fracmux),
+ 	COMPOSITE_NOMUX(0, "i2s1_pre", "i2s_src", 0,
+ 			RK2928_CLKSEL_CON(3), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(0), 9, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "i2s1_frac", "i2s1_pre", 0,
++	COMPOSITE_FRACMUX(0, "i2s1_frac", "i2s1_pre", CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(7), 0,
+ 			RK2928_CLKGATE_CON(0), 10, GFLAGS,
+ 			&rk3066a_i2s1_fracmux),
+ 	COMPOSITE_NOMUX(0, "i2s2_pre", "i2s_src", 0,
+ 			RK2928_CLKSEL_CON(4), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(0), 11, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "i2s2_frac", "i2s2_pre", 0,
++	COMPOSITE_FRACMUX(0, "i2s2_frac", "i2s2_pre", CLK_SET_RATE_PARENT,
+ 			RK2928_CLKSEL_CON(8), 0,
+ 			RK2928_CLKGATE_CON(0), 12, GFLAGS,
+ 			&rk3066a_i2s2_fracmux),
+
+From 92f4e0ee781a50a87efce78ab3bcf80a384f172b Mon Sep 17 00:00:00 2001
+From: Johan Jonker <jbx6244@gmail.com>
+Date: Wed, 18 Nov 2020 14:58:17 +0100
+Subject: [PATCH] clk: rockchip: fix i2s gate bits on rk3066 and rk3188
+
+The Rockchip PX2/RK3066 uses these bits in CRU_CLKGATE7_CON:
+
+hclk_i2s_8ch_gate_en  bit 4 (dtsi: i2s0)
+hclk_i2s0_2ch_gate_en bit 2 (dtsi: i2s1)
+hclk_i2s1_2ch_gate_en bit 3 (dtsi: i2s2)
+
+The Rockchip PX3/RK3188 uses this bit in CRU_CLKGATE7_CON:
+
+hclk_i2s_2ch_gate_en  bit 2 (dtsi: i2s0)
+
+The bits got somehow mixed up in the clk-rk3188.c file.
+The labels in the dtsi files are not suppose to change.
+The sclk and hclk names should match for
+"trace_event=clk_disable,clk_enable",
+so remove GATE HCLK_I2S0 from the common clock tree and
+fix the bits in the rk3066 and rk3188 clock tree.
+
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Link: https://lore.kernel.org/r/20201118135822.9582-3-jbx6244@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+---
+ drivers/clk/rockchip/clk-rk3188.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/clk/rockchip/clk-rk3188.c b/drivers/clk/rockchip/clk-rk3188.c
+index db8c588139de..0b76ad34de00 100644
+--- a/drivers/clk/rockchip/clk-rk3188.c
++++ b/drivers/clk/rockchip/clk-rk3188.c
+@@ -449,7 +449,6 @@ static struct rockchip_clk_branch common_clk_branches[] __initdata = {
+ 
+ 	/* hclk_cpu gates */
+ 	GATE(HCLK_ROM, "hclk_rom", "hclk_cpu", 0, RK2928_CLKGATE_CON(5), 6, GFLAGS),
+-	GATE(HCLK_I2S0, "hclk_i2s0", "hclk_cpu", 0, RK2928_CLKGATE_CON(7), 2, GFLAGS),
+ 	GATE(HCLK_SPDIF, "hclk_spdif", "hclk_cpu", 0, RK2928_CLKGATE_CON(7), 1, GFLAGS),
+ 	GATE(0, "hclk_cpubus", "hclk_cpu", 0, RK2928_CLKGATE_CON(4), 8, GFLAGS),
+ 	/* hclk_ahb2apb is part of a clk branch */
+@@ -634,8 +633,9 @@ static struct rockchip_clk_branch rk3066a_clk_branches[] __initdata = {
+ 			RK2928_CLKGATE_CON(0), 12, GFLAGS,
+ 			&rk3066a_i2s2_fracmux),
+ 
+-	GATE(HCLK_I2S1, "hclk_i2s1", "hclk_cpu", 0, RK2928_CLKGATE_CON(7), 3, GFLAGS),
+-	GATE(HCLK_I2S2, "hclk_i2s2", "hclk_cpu", 0, RK2928_CLKGATE_CON(7), 4, GFLAGS),
++	GATE(HCLK_I2S0, "hclk_i2s0", "hclk_cpu", 0, RK2928_CLKGATE_CON(7), 4, GFLAGS),
++	GATE(HCLK_I2S1, "hclk_i2s1", "hclk_cpu", 0, RK2928_CLKGATE_CON(7), 2, GFLAGS),
++	GATE(HCLK_I2S2, "hclk_i2s2", "hclk_cpu", 0, RK2928_CLKGATE_CON(7), 3, GFLAGS),
+ 	GATE(HCLK_CIF1, "hclk_cif1", "hclk_cpu", 0, RK2928_CLKGATE_CON(6), 6, GFLAGS),
+ 	GATE(HCLK_HDMI, "hclk_hdmi", "hclk_cpu", 0, RK2928_CLKGATE_CON(4), 14, GFLAGS),
+ 
+@@ -728,6 +728,7 @@ static struct rockchip_clk_branch rk3188_clk_branches[] __initdata = {
+ 			RK2928_CLKGATE_CON(0), 10, GFLAGS,
+ 			&rk3188_i2s0_fracmux),
+ 
++	GATE(HCLK_I2S0, "hclk_i2s0", "hclk_cpu", 0, RK2928_CLKGATE_CON(7), 2, GFLAGS),
+ 	GATE(0, "hclk_imem0", "hclk_cpu", 0, RK2928_CLKGATE_CON(4), 14, GFLAGS),
+ 	GATE(0, "hclk_imem1", "hclk_cpu", 0, RK2928_CLKGATE_CON(4), 15, GFLAGS),
+ 
+
+From 428558bb28a1928b4086cc2c1ddc2dcc274cfdb2 Mon Sep 17 00:00:00 2001
+From: Alex Bee <knaerzche@gmail.com>
+Date: Wed, 2 Dec 2020 11:02:12 +0200
+Subject: [PATCH] fixup: clk: rockchip: rk3188: remove CLK_SET_RATE_PARENT from
+ uarts and is2s FRACMUNXes
+
+Signed-off-by: Alex Bee <knaerzche@gmail.com>
+---
+ drivers/clk/rockchip/clk-rk3188.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/clk/rockchip/clk-rk3188.c b/drivers/clk/rockchip/clk-rk3188.c
+index 0b76ad34de00..2760ec2d0a74 100644
+--- a/drivers/clk/rockchip/clk-rk3188.c
++++ b/drivers/clk/rockchip/clk-rk3188.c
+@@ -415,21 +415,21 @@ static struct rockchip_clk_branch common_clk_branches[] __initdata = {
+ 	COMPOSITE_NOMUX(0, "uart1_pre", "uart_src", 0,
+ 			RK2928_CLKSEL_CON(14), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(1), 10, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "uart1_frac", "uart1_pre", CLK_SET_RATE_PARENT,
++	COMPOSITE_FRACMUX(0, "uart1_frac", "uart1_pre", 0,
+ 			RK2928_CLKSEL_CON(18), 0,
+ 			RK2928_CLKGATE_CON(1), 11, GFLAGS,
+ 			&common_uart1_fracmux),
+ 	COMPOSITE_NOMUX(0, "uart2_pre", "uart_src", 0,
+ 			RK2928_CLKSEL_CON(15), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(1), 12, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "uart2_frac", "uart2_pre", CLK_SET_RATE_PARENT,
++	COMPOSITE_FRACMUX(0, "uart2_frac", "uart2_pre", 0,
+ 			RK2928_CLKSEL_CON(19), 0,
+ 			RK2928_CLKGATE_CON(1), 13, GFLAGS,
+ 			&common_uart2_fracmux),
+ 	COMPOSITE_NOMUX(0, "uart3_pre", "uart_src", 0,
+ 			RK2928_CLKSEL_CON(16), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(1), 14, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "uart3_frac", "uart3_pre", CLK_SET_RATE_PARENT,
++	COMPOSITE_FRACMUX(0, "uart3_frac", "uart3_pre", 0,
+ 			RK2928_CLKSEL_CON(20), 0,
+ 			RK2928_CLKGATE_CON(1), 15, GFLAGS,
+ 			&common_uart3_fracmux),
+@@ -614,21 +614,21 @@ static struct rockchip_clk_branch rk3066a_clk_branches[] __initdata = {
+ 	COMPOSITE_NOMUX(0, "i2s0_pre", "i2s_src", 0,
+ 			RK2928_CLKSEL_CON(2), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(0), 7, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "i2s0_frac", "i2s0_pre", CLK_SET_RATE_PARENT,
++	COMPOSITE_FRACMUX(0, "i2s0_frac", "i2s0_pre", 0,
+ 			RK2928_CLKSEL_CON(6), 0,
+ 			RK2928_CLKGATE_CON(0), 8, GFLAGS,
+ 			&rk3066a_i2s0_fracmux),
+ 	COMPOSITE_NOMUX(0, "i2s1_pre", "i2s_src", 0,
+ 			RK2928_CLKSEL_CON(3), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(0), 9, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "i2s1_frac", "i2s1_pre", CLK_SET_RATE_PARENT,
++	COMPOSITE_FRACMUX(0, "i2s1_frac", "i2s1_pre", 0,
+ 			RK2928_CLKSEL_CON(7), 0,
+ 			RK2928_CLKGATE_CON(0), 10, GFLAGS,
+ 			&rk3066a_i2s1_fracmux),
+ 	COMPOSITE_NOMUX(0, "i2s2_pre", "i2s_src", 0,
+ 			RK2928_CLKSEL_CON(4), 0, 7, DFLAGS,
+ 			RK2928_CLKGATE_CON(0), 11, GFLAGS),
+-	COMPOSITE_FRACMUX(0, "i2s2_frac", "i2s2_pre", CLK_SET_RATE_PARENT,
++	COMPOSITE_FRACMUX(0, "i2s2_frac", "i2s2_pre", 0,
+ 			RK2928_CLKSEL_CON(8), 0,
+ 			RK2928_CLKGATE_CON(0), 12, GFLAGS,
+ 			&rk3066a_i2s2_fracmux),
