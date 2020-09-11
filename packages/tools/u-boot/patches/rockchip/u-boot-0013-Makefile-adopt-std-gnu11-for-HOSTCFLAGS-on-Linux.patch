@@ -1,4 +1,4 @@
-From 4270dca0656b872ac44dc860151bba76c257cfe2 Mon Sep 17 00:00:00 2001
+From a1f373eed0339a270acc991f2642f11979ccd78f Mon Sep 17 00:00:00 2001
 From: Philipp Tomsich <philipp.tomsich@theobroma-systems.com>
 Date: Mon, 14 May 2018 15:22:06 +0200
 Subject: [PATCH] Makefile: adopt --std=gnu11 for HOSTCFLAGS on Linux
@@ -27,7 +27,7 @@ Reviewed-by: Tom Rini <trini@konsulko.com>
  1 file changed, 9 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index fe2a57fa58..484a1eb01d 100644
+index 91b9cb9313..54cebb2b0f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -260,6 +260,15 @@ HOSTCFLAGS   = -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer \
@@ -46,3 +46,6 @@ index fe2a57fa58..484a1eb01d 100644
  ifeq ($(HOSTOS),cygwin)
  HOSTCFLAGS	+= -ansi
  endif
+-- 
+2.25.1
+

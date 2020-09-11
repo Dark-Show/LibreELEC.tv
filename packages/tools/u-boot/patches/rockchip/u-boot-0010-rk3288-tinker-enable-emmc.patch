@@ -1,4 +1,4 @@
-From f6ac1287103cf1abae453ddaf3e78ef9c204542a Mon Sep 17 00:00:00 2001
+From 71ad3953a680f628cf5251764a72644d396b6f85 Mon Sep 17 00:00:00 2001
 From: Jonas Karlman <jonas@kwiboo.se>
 Date: Thu, 13 Sep 2018 22:23:48 +0200
 Subject: [PATCH] rk3288-tinker: enable emmc
@@ -55,3 +55,6 @@ index 58eea3c405..42878ed8fa 100644
  
  #define CONFIG_SYS_MMC_ENV_DEV 1
  
+-- 
+2.25.1
+

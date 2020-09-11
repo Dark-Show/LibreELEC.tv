@@ -1,4 +1,4 @@
-From 400e9e6b21878e8570ce1cb0242d93baa6c21c99 Mon Sep 17 00:00:00 2001
+From a20d0c6dc9dd1efc6a48889b4ed985d7fb6e46e0 Mon Sep 17 00:00:00 2001
 From: Jonas Karlman <jonas@kwiboo.se>
 Date: Mon, 20 Aug 2018 23:01:10 +0200
 Subject: [PATCH] rk3399-evb: use common get serial and ethaddr from efuse
@@ -170,3 +170,6 @@ index 5565c7ce53..840d63ff6d 100644
  
  #define CONFIG_BMP_16BPP
  #define CONFIG_BMP_24BPP
+-- 
+2.25.1
+

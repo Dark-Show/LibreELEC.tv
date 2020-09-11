@@ -1,4 +1,4 @@
-From 7fcf14b5dafa574cb9f565afebc8428c50f0be02 Mon Sep 17 00:00:00 2001
+From 0c85404d3c543a0b32d3bc249fdb0ee524d049ae Mon Sep 17 00:00:00 2001
 From: Tom Rini <trini@konsulko.com>
 Date: Tue, 19 Jun 2018 23:53:54 -0400
 Subject: [PATCH] Makefile: Ensure we build with -std=gnu11
@@ -16,7 +16,7 @@ Signed-off-by: Tom Rini <trini@konsulko.com>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 484a1eb01d..752bff499e 100644
+index 54cebb2b0f..30edf5062f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -265,8 +265,9 @@ HOSTCXXFLAGS = -O2
@@ -39,3 +39,6 @@ index 484a1eb01d..752bff499e 100644
  KBUILD_CFLAGS	+= -fshort-wchar
  KBUILD_AFLAGS   := -D__ASSEMBLY__
  
+-- 
+2.25.1
+
