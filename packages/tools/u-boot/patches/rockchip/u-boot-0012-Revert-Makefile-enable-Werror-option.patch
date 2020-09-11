@@ -1,4 +1,4 @@
-From 45be7edd81e458ca90985a0c687e769aa9ebaf5b Mon Sep 17 00:00:00 2001
+From e4072ddf186558e5c57eeffb6c7a464261731450 Mon Sep 17 00:00:00 2001
 From: Jonas Karlman <jonas@kwiboo.se>
 Date: Mon, 9 Sep 2019 05:59:12 +0000
 Subject: [PATCH] Revert "Makefile: enable -Werror option"
@@ -9,7 +9,7 @@ This reverts commit 76ba1d8a713bc964fc8e0a639f90344c4c60f026.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index f81ac1f9f9..fe2a57fa58 100644
+index 2f134ccbf3..91b9cb9313 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -360,7 +360,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__ -D__UBOOT__
@@ -21,3 +21,6 @@ index f81ac1f9f9..fe2a57fa58 100644
  KBUILD_AFLAGS   := -D__ASSEMBLY__
  
  # Read UBOOTRELEASE from include/config/uboot.release (if it exists)
+-- 
+2.25.1
+

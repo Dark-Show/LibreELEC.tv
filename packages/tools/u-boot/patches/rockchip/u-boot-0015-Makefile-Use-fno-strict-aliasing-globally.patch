@@ -1,4 +1,4 @@
-From dcee38742d6376e3fec6e5997077c681d28d1656 Mon Sep 17 00:00:00 2001
+From 51a1ae2f3ca8d03b2fcc7e9d70e964e4bd1079b5 Mon Sep 17 00:00:00 2001
 From: Bin Meng <bmeng.cn@gmail.com>
 Date: Sun, 16 Sep 2018 22:35:28 -0700
 Subject: [PATCH] Makefile: Use -fno-strict-aliasing globally
@@ -31,7 +31,7 @@ Reviewed-by: Simon Glass <sjg@chromium.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index 752bff499e..14cf1fae33 100644
+index 30edf5062f..ce71db5443 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -370,7 +370,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__ -D__UBOOT__
@@ -43,3 +43,6 @@ index 752bff499e..14cf1fae33 100644
  KBUILD_AFLAGS   := -D__ASSEMBLY__
  
  # Read UBOOTRELEASE from include/config/uboot.release (if it exists)
+-- 
+2.25.1
+
