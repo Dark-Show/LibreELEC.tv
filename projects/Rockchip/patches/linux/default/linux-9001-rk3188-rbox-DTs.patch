@@ -236,14 +236,14 @@ index 000000000000..f80eeaa44550
 +	pinctrl-0 = <&sd1_clk>, <&sd1_cmd>,
 +		    <&sd1_bus4>;
 +	vmmc-supply = <&vcc_io>;
-+	vmmcq-supply = <&vccio_wl>;
++	vqmmc-supply = <&vccio_wl>;
 +	cap-sd-highspeed;
 +	status = "okay";
 +	#address-cells = <1>;
 +	#size-cells = <0>;
 +
-+	brcmf: wifi@1 {
-+		reg = <0x1>;
++	brcmf: wifi@0 {
++		reg = <0x0>;
 +		compatible = "brcm,bcm4329-fmac";
 +		interrupt-parent = <&gpio3>;
 +		interrupts = <RK_PD2 GPIO_ACTIVE_HIGH>;

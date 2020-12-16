@@ -21,8 +21,8 @@ fi
 PKG_NEED_UNPACK="$PROJECT_DIR/$PROJECT/bootloader"
 [ -n "$DEVICE" ] && PKG_NEED_UNPACK+=" $PROJECT_DIR/$PROJECT/devices/$DEVICE/bootloader"
 
-case "$PROJECT" in
-  Rockchip)
+case "$UBOOT_PROJECT" in
+  rockchip)
     PKG_VERSION="505eebf24e153630f5a3e0ec232ffda67bf48e9e"
     PKG_SHA256="ba4e0c7e38b5af221b7d0ee185fe15ebd38b23f9b533bc2aeab68fbea49034d7"
     PKG_URL="https://github.com/rockchip-linux/u-boot/archive/$PKG_VERSION.tar.gz"
